@@ -6,7 +6,7 @@ before_install:
 install: true
 services:
 - docker
-script: ./mvnw clean install deploy -DskipTests=true -Ddocker.username=ashraf1abdelrasool -Ddocker.password=01120266849
+script: ./mvnw clean install -DskipTests=true -Ddocker.username=ashraf1abdelrasool -Ddocker.password=01120266849
 cache:
   directories:
   - $HOME/.m2
