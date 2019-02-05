@@ -1,0 +1,9 @@
+<li class="list-group-item">
+  <a [routerLink]="['/profile/',user.id]" class="thumb-sm pull-left m-r-sm">
+    <img [src]="user.imageUrl" class="img-circle">
+  </a>
+  <a [routerLink]="['/profile/',user.id]" class="clear">
+    <strong class="block">{{user.name}}</strong>
+    <small>{{user.info}}</small>
+  </a>
+</li>

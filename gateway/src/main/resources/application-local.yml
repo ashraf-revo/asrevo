@@ -1,0 +1,49 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: auth
+        uri: http://localhost:9999/auth/
+        predicates:
+        - Path=/auth/**
+      - id: tube
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/tube/**
+      - id: file
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/file/**
+      - id: feedback
+        uri: http://localhost:8083/
+        predicates:
+        - Path=/feedback/**
+      - id: ffmpeg
+        uri: http://localhost:8084/
+        predicates:
+        - Path=/ffmpeg/**
+  #      discovery:
+  #        locator:
+  #          enabled: true
+  #          url-expression: "'lb:http://'+serviceId"
+
+  security:
+    oauth2:
+      client:
+        registration:
+          login-client:
+            provider: auth
+            client-id: revo1
+            client-secret: revo1
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: read
+        provider:
+          auth:
+            authorization-uri: http://localhost:9999/auth/oauth/authorize
+            token-uri: http://localhost:9999/auth/oauth/token
+            user-info-uri: http://localhost:9999/auth/user
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+server:
+  port: 8080

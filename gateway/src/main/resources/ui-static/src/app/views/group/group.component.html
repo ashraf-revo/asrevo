@@ -1,0 +1,53 @@
+<section class="hbox stretch" style="display: inline-table">
+  <aside class="aside-lg bg-light lter b-r">
+    <section class="vbox">
+      <section class="scrollable">
+        <div class="wrapper">
+          <a class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+            <i class="icon-refresh i-lg inline" id="refresh"></i>
+          </a>
+          <h2 class="font-thin m-b">
+            <as-animate-bar></as-animate-bar>
+            Group
+            {{group.title}}
+          </h2>
+          <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+              <div class="blog-post">
+                <div class="post-item">
+                  <ul style="overflow-y: scroll;height: 82vh"
+                      class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+
+
+                    <li class="list-group-item clearfix" *ngFor="let m of master">
+                      <a [routerLink]="['/video',m.id]" class="pull-left thumb-sm m-r">
+                        <img [src]="m.image">
+                      </a>
+
+                      <a *ngIf="authUser.user!=null&&m.userId===authUser.user.id" (click)="delete(m)"
+                         class="btn btn-xs btn-default pull-right ng-click-active"
+                         aria-hidden="false" style="">
+                        <i class="fa fa-times"></i>
+                      </a>
+
+                      <a class="clear" [routerLink]="['/video',m.id]">
+                        <span class="block text-ellipsis">
+                                <span class="text">{{m.title}}</span>
+                        </span>
+                      </a>
+                      <a *ngIf="m.user" class="clear" [routerLink]="['/profile',m.user.id]">
+                        <small class="text-muted">{{m.user.name}}</small>
+                      </a>
+                    </li>
+
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+</section>

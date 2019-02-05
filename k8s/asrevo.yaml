@@ -1,0 +1,346 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default
+data:
+  default.yaml: |-
+    spring:
+      security:
+        oauth2:
+          resourceserver:
+            jwt:
+              jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+      rabbitmq:
+        username: zhowcpsz
+        password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
+        host: mosquito.rmq.cloudamqp.com
+        virtual-host: zhowcpsz
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: ["*"]
+      endpoint:
+        health:
+          show-details: always
+    info:
+      app:
+        name: ${spring.application.name}
+    logging:
+      file: /tmp/${spring.application.name}.log
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth
+data:
+  auth.yaml: |-
+    spring:
+      session:
+        store-type: redis
+      data:
+        mongodb:
+          database: CloudFoundry_jotgo8n0_o3nspm3g
+          port: 63683
+          password: AzyK1TQ2552raJO_-PCLdZIw6ZBetGb4
+          username: CloudFoundry_jotgo8n0_o3nspm3g_bpifhjla
+          host: ds163683.mlab.com
+      redis:
+        host:
+        password:
+        port:
+    server:
+      servlet:
+        context-path: /auth
+      use-forward-headers: true
+      tomcat:
+        protocol-header: X-Forwarded-Proto
+        remote-ip-header: X-Forwarded-For
+        port-header: X-Forwarded-Port
+        protocol-header-https-value: https
+    org:
+      revo:
+        env:
+          users:
+          - email: ashraf1abdelrasool@gmail.com
+            enable: true
+            id: 5bfd3df1ad8ce6617f9bf635
+            imageUrl: /assets/images/a5.jpg
+            info: this is sample info about me you are welcome
+            locked: true
+            name: ashraf
+            password: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
+            phone: 1120266849
+            type: 111
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway
+data:
+  gateway.yaml: |-
+    spring:
+      cloud:
+        gateway:
+          discovery:
+            locator:
+              enabled: true
+              url-expression: "'lb:http://'+serviceId"
+      security:
+        oauth2:
+          client:
+            registration:
+              login-client:
+                provider: auth
+                client-id: revo1
+                client-secret: revo1
+                authorization-grant-type: authorization_code
+                redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+                scope: read
+            provider:
+              auth:
+                authorization-uri: http://localhost:9999/auth/oauth/authorize
+                token-uri: http://localhost:9999/auth/oauth/token
+                user-info-uri: http://localhost:9999/auth/user
+                user-name-attribute: sub
+                jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tube
+data:
+  tube.yaml: |-
+    spring:
+      data:
+        mongodb:
+          database: CloudFoundry_jotgo8n0_9b995k1v
+          port: 63683
+          password: 0qnrjUSJ4PkQoga0A6W-NpJ85k1BHGvm
+          username: CloudFoundry_jotgo8n0_9b995k1v_hqpr23r7
+          host: ds163683.mlab.com
+      cloud:
+        stream:
+          bindings:
+            tube_hls:
+              destination: tube.hls
+              group: s1
+              contentType: application/json
+            tube_info:
+              destination: tube.info
+              group: s1
+              contentType: application/json
+            tube_store:
+              destination: tube.store
+              group: s1
+              contentType: application/json
+            ffmpeg_queue:
+              destination: ffmpeg.queue
+              group: s1
+              contentType: application/json
+            feedback_index:
+              destination: feedback.index
+              group: s1
+              contentType: application/json
+            file_queue:
+              destination: file.queue
+              group: s1
+              contentType: application/json
+            torrent_queue:
+              destination: torrent.queue
+              group: s1
+              contentType: application/json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: file
+data:
+  file.yaml: |-
+    spring:
+      cloud:
+        stream:
+          bindings:
+            tube_store:
+              destination: tube.store
+              group: s1
+              contentType: application/json
+            file_queue:
+              destination: file.queue
+              group: s1
+              contentType: application/json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feedback
+data:
+  feedback.yaml: |-
+    serverUri: https://gopivotal:a4423e3744cd633de4368031b3f1ab13@thorin-us-east-1.searchly.com
+    spring:
+      data:
+        mongodb:
+          database: CloudFoundry_jotgo8n0_2po2998g
+          port: 63683
+          password: o61-8UaDOFO74rb5HMf76uR_bqaIwHlC
+          username: CloudFoundry_jotgo8n0_2po2998g_s3f7fpkr
+          host: ds163683.mlab.com
+      redis:
+        host: redis-18285.c93.us-east-1-3.ec2.cloud.redislabs.com
+        password: w9cylfo4j28B4zKK6qWjZcgD2crUxdAd
+        port: 18285
+      cloud:
+        stream:
+          bindings:
+            feedback_index:
+              destination: feedback.index
+              group: s1
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ffmpeg
+data:
+  ffmpeg.yaml: |-
+    spring:
+      cloud:
+        stream:
+          bindings:
+            ffmpeg_queue:
+              destination: ffmpeg.queue
+              group: s1
+              contentType: application/json
+            ffmpeg_converter_pop:
+              destination: ffmpeg.converter
+              group: s1
+              contentType: application/json
+            ffmpeg_converter_push:
+              destination: ffmpeg.converter
+              group: s1
+              contentType: application/json
+            ffmpeg_hls_push:
+              destination: ffmpeg.hls
+              group: s1
+              contentType: application/json
+            tube_info:
+              destination: tube.info
+              group: s1
+              contentType: application/json
+            ffmpeg_hls_pop:
+              destination: ffmpeg.hls
+              group: s1
+              contentType: application/json
+            tube_hls:
+              destination: tube.hls
+              group: s1
+              contentType: application/json
+          rabbit:
+            bindings:
+              ffmpeg_converter_pop:
+                consumer:
+                  max-priority: 20
+                  concurrency: 1
+                  maxConcurrency: 1
+                  maxAttempts: 0
+    logo: asrevo
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: reader
+rules:
+- apiGroups: [""]
+  resources: ["routes","pods","pods/log","pods/status","services","services/proxy","configmaps","endpoints","secrets","serviceaccounts","namespaces","namespaces/status","resourcequotas/status","events","bindings","replicationcontrollers","persistentvolumeclaims"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: reader
+roleRef:
+  kind: Role
+  name: reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: default
+  apiGroup: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  selector:
+    matchLabels:
+      run: auth
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: auth
+    spec:
+      containers:
+      - name: auth
+        image: ashraf1abdelrasool/auth:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  labels:
+    run: auth
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  selector:
+    run: auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  selector:
+    matchLabels:
+      run: gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: ashraf1abdelrasool/gateway:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    run: gateway
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  selector:
+    run: gateway

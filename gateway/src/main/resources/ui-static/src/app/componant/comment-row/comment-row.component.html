@@ -1,0 +1,12 @@
+<article id="chat-id-3" class="chat-item left">
+  <a [routerLink]="['/profile',umc.userId]" class="pull-left thumb-sm avatar">
+    <img [src]="umc?.user?.imageUrl" class="img-circle" alt="...">
+  </a>
+  <section class="chat-body">
+    <div class="panel bg-light text-sm m-b-none">
+      <div class="panel-body"><span class="arrow left"></span>
+        <p class="m-b-none">{{umc.message}}</p></div>
+    </div>
+    <small class="text-muted">{{umc.createdDate | amTimeAgo}}</small>
+  </section>
+</article>

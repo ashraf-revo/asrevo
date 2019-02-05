@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: file
+  cloud:
+    kubernetes:
+      config:
+        sources:
+        - name: ${spring.application.name}
+        - name: default
+    gcp:
+      storage:
+        credentials:
+          location: classpath:ivory-program-229516-e71181040dc8.json
+  profiles:
+    active: default,local

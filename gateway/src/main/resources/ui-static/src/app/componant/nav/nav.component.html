@@ -1,0 +1,60 @@
+<section class="w-f-md scrollable">
+  <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
+       data-size="10px" data-railOpacity="0.2">
+    <nav class="nav-primary hidden-xs" style="position: fixed;">
+      <ul class="nav bg clearfix">
+        <li class="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">
+          Discover
+        </li>
+        <li>
+          <a [routerLink]="['/']">
+            <i class="icon-disc icon text-success"></i>
+            <span class="font-bold">
+                What's new
+              </span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/trending']">
+            <i class="icon-fire icon text-info"></i>
+            <span class="font-bold">
+                                                Trending
+                                            </span>
+          </a>
+        </li>
+        <li *ngIf="authUser.isAuth=='true'">
+          <a [routerLink]="['/subscriptions']">
+            <i class="icon-list icon text-info"></i>
+            <span class="font-bold">
+                                                Subscriptions
+                                            </span>
+          </a>
+        </li>
+        <li *ngIf="authUser.isAuth=='true'">
+          <a [routerLink]="['/history']">
+            <i class="icon-notebook icon text-info"></i>
+            <span class="font-bold">
+                                                History
+                                            </span>
+          </a>
+        </li>
+        <li *ngIf="authUser.isAuth=='true'">
+          <a [routerLink]="['/upload']">
+            <i class="icon-cloud-upload icon text-info"></i>
+            <span class="font-bold">
+                                                Upload
+                                            </span>
+          </a>
+        </li>
+        <li *ngIf="authUser.isAuth=='true'">
+          <a [routerLink]="['/settings']">
+            <i class=" icon-settings icon text-primary"></i>
+            <span class="font-bold">
+                                            Settings
+                                        </span>
+          </a>
+        </li>
+        <li class="m-b hidden-nav-xs"></li>
+      </ul>
+    </nav> <!-- / nav --> </div>
+</section>

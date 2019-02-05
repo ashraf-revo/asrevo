@@ -1,0 +1,21 @@
+serverUri: https://gopivotal:a4423e3744cd633de4368031b3f1ab13@thorin-us-east-1.searchly.com
+spring:
+  data:
+    mongodb:
+      database: CloudFoundry_jotgo8n0_2po2998g
+      port: 63683
+      password: o61-8UaDOFO74rb5HMf76uR_bqaIwHlC
+      username: CloudFoundry_jotgo8n0_2po2998g_s3f7fpkr
+      host: ds163683.mlab.com
+  redis:
+    host: redis-18285.c93.us-east-1-3.ec2.cloud.redislabs.com
+    password: w9cylfo4j28B4zKK6qWjZcgD2crUxdAd
+    port: 18285
+  cloud:
+    stream:
+      bindings:
+        feedback_index:
+          destination: feedback.index
+          group: s1
+server:
+  port: 8083
