@@ -1,7 +1,7 @@
 package org.revo.ffmpeg.Service.Impl;
 
-import org.revo.ffmpeg.Config.Env;
-import org.revo.ffmpeg.Domain.Master;
+import org.revo.core.base.Config.Env;
+import org.revo.core.base.Doamin.Master;
 import org.revo.ffmpeg.Service.S3Service;
 import org.revo.ffmpeg.Service.TempFileService;
 import org.springframework.beans.factory.annotation.Autowired;

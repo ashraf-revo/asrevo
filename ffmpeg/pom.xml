@@ -54,7 +54,11 @@
             <artifactId>bson</artifactId>
             <version>3.6.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.revo.asrevo.core</groupId>
+            <artifactId>base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

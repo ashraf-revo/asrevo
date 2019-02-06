@@ -2,7 +2,7 @@ package org.revo.tube.Service.Impl;
 
 import com.comcast.viper.hlsparserj.tags.UnparsedTag;
 import org.bson.types.ObjectId;
-import org.revo.tube.Domain.*;
+import org.revo.core.base.Doamin.*;
 import org.revo.tube.Repository.MasterRepository;
 import org.revo.tube.Service.IndexService;
 import org.revo.tube.Service.MasterService;

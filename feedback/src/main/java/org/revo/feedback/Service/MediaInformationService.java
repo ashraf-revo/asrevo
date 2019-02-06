@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.feedback.Domain.MediaInformation;
+import org.revo.core.base.Doamin.MediaInformation;
 
 import java.util.List;
 import java.util.Optional;

@@ -6,10 +6,10 @@ import com.comcast.viper.hlsparserj.tags.UnparsedTag;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import org.apache.commons.io.FilenameUtils;
-import org.revo.ffmpeg.Config.Env;
-import org.revo.ffmpeg.Domain.Index;
-import org.revo.ffmpeg.Domain.IndexImpl;
-import org.revo.ffmpeg.Domain.Master;
+import org.revo.core.base.Config.Env;
+import org.revo.core.base.Doamin.Index;
+import org.revo.core.base.Doamin.IndexImpl;
+import org.revo.core.base.Doamin.Master;
 import org.revo.ffmpeg.Service.FfmpegService;
 import org.revo.ffmpeg.Service.S3Service;
 import org.revo.ffmpeg.Service.SignedUrlService;
@@ -96,7 +96,7 @@ public class FfmpegServiceImpl implements FfmpegService {
             File file = png.toFile();
             s3Service.pushImageDelete(getPath(master, master.getId() + ".webp"), file);
         }
-        master.setImage(signedUrlService.getUrl(env.getBuckets().get("thumb"), getPath(master, master.getId())));
+        master.setImage(signedUrlService.generate("thumb", getPath(master, master.getId())));
         return master;
     }
 
@@ -110,7 +110,7 @@ public class FfmpegServiceImpl implements FfmpegService {
 
     @Override
     public FFmpegProbeResult probe(Master master, String key) throws IOException {
-        return fFprobe.probe(signedUrlService.generate(env.getBuckets().get("video"), getPath(master, key)));
+        return fFprobe.probe(signedUrlService.generate("video", getPath(master, key)));
     }
 
     private String getPath(Master master, String key) {

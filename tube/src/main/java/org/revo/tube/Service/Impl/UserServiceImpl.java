@@ -1,7 +1,7 @@
 package org.revo.tube.Service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.revo.tube.Domain.User;
+import org.revo.core.base.Doamin.User;
 import org.revo.tube.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

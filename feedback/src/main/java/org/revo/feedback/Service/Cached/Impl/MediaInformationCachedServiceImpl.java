@@ -1,17 +1,15 @@
 package org.revo.feedback.Service.Cached.Impl;
 
-import org.revo.feedback.Domain.MediaInformation;
+import org.revo.core.base.Doamin.MediaInformation;
 import org.revo.feedback.Service.Cached.MediaInformationCachedService;
 import org.revo.feedback.Service.MediaInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -48,8 +46,8 @@ public class MediaInformationCachedServiceImpl implements MediaInformationCached
         return mongoOperations.find(query, MediaInformation.class);
     }
 
-    @CacheEvict(value = "TrendingMediaInformation", key = "#root.methodName", allEntries = true)
-    @Scheduled(cron = "0 0 * * * *")
+    //    @CacheEvict(value = "TrendingMediaInformation", key = "#root.methodName", allEntries = true)
+//    @Scheduled(cron = "0 0 * * * *")
     @Override
     public void trending() {
     }

@@ -1,6 +1,6 @@
 package org.revo.tube.Service;
 
-import org.revo.tube.Domain.File;
+import org.revo.core.base.Doamin.File;
 import reactor.core.publisher.Mono;
 
 public interface FileService {

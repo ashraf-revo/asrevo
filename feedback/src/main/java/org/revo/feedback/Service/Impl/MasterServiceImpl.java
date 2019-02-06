@@ -8,7 +8,7 @@ import opennlp.tools.tokenize.SimpleTokenizer;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import org.revo.feedback.Domain.Master;
+import org.revo.core.base.Doamin.Master;
 import org.revo.feedback.Service.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<Master> search(org.revo.feedback.Domain.Search search) {
+    public List<Master> search(org.revo.core.base.Doamin.Search search) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.termsQuery("keys", steam(search.getSearch_key()).split(" ")));
         searchSourceBuilder.sort("_score", SortOrder.DESC);

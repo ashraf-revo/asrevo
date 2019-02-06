@@ -1,6 +1,6 @@
 package org.revo.ffmpeg;
 
-import org.revo.ffmpeg.Config.Env;
+import org.revo.core.base.Config.Env;
 import org.revo.ffmpeg.Config.Processor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

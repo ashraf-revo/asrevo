@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.feedback.Domain.UserMediaView;
+import org.revo.core.base.Doamin.UserMediaView;
 import org.revo.feedback.Repository.UserMediaViewRepository;
 import org.revo.feedback.Service.Cached.UserMediaViewCachedService;
 import org.revo.feedback.Service.UserMediaEventListener;

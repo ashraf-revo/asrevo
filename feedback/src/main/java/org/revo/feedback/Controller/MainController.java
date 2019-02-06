@@ -1,6 +1,6 @@
 package org.revo.feedback.Controller;
 
-import org.revo.feedback.Domain.*;
+import org.revo.core.base.Doamin.*;
 import org.revo.feedback.Service.Cached.MediaInformationCachedService;
 import org.revo.feedback.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package org.revo.file;
 
-import org.revo.file.Config.Env;
+import org.revo.core.base.Config.Env;
 import org.revo.file.Config.Processor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

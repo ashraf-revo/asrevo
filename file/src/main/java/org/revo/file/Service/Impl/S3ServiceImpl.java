@@ -1,7 +1,7 @@
 package org.revo.file.Service.Impl;
 
 import com.google.cloud.storage.Storage;
-import org.revo.file.Config.Env;
+import org.revo.core.base.Config.Env;
 import org.revo.file.Service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +24,9 @@ public class S3ServiceImpl implements S3Service {
     private Env env;
 
     @Override
-    public void push(String key, File file) {
+    public void push(String bucket, String key, File file) {
         try {
-            this.storage.create(newBuilder(of(env.getBuckets().get("video").toString(), key)).build(), new FileInputStream(file));
+            this.storage.create(newBuilder(of(env.getBuckets().get(bucket).toString(), key)).build(), new FileInputStream(file));
         } catch (FileNotFoundException e) {
 
         }

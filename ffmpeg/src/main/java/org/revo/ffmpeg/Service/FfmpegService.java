@@ -1,8 +1,8 @@
 package org.revo.ffmpeg.Service;
 
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
-import org.revo.ffmpeg.Domain.Index;
-import org.revo.ffmpeg.Domain.Master;
+import org.revo.core.base.Doamin.Index;
+import org.revo.core.base.Doamin.Master;
 
 import java.io.IOException;
 

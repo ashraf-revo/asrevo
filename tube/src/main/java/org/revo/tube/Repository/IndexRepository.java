@@ -1,6 +1,6 @@
 package org.revo.tube.Repository;
 
-import org.revo.tube.Domain.Index;
+import org.revo.core.base.Doamin.Index;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 

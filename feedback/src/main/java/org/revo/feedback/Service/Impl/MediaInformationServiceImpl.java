@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.feedback.Domain.MediaInformation;
+import org.revo.core.base.Doamin.MediaInformation;
 import org.revo.feedback.Repository.MediaInformationRepository;
 import org.revo.feedback.Service.MediaInformationService;
 import org.springframework.beans.factory.annotation.Autowired;

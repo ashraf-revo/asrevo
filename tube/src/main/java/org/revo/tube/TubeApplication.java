@@ -1,6 +1,6 @@
 package org.revo.tube;
 
-import org.revo.tube.Config.Env;
+import org.revo.core.base.Config.Env;
 import org.revo.tube.Config.Processor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

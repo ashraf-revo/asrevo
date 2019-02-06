@@ -1,6 +1,6 @@
 package org.revo.feedback.Repository;
 
-import org.revo.feedback.Domain.UserMediaComment;
+import org.revo.core.base.Doamin.UserMediaComment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

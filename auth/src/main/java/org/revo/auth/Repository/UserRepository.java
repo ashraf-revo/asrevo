@@ -1,6 +1,6 @@
 package org.revo.auth.Repository;
 
-import org.revo.auth.Domain.User;
+import org.revo.core.base.Doamin.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

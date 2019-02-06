@@ -1,6 +1,6 @@
 package org.revo.feedback.Repository;
 
-import org.revo.feedback.Domain.UserUserFollow;
+import org.revo.core.base.Doamin.UserUserFollow;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

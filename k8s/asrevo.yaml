@@ -29,6 +29,22 @@ data:
         name: ${spring.application.name}
     logging:
       file: /tmp/${spring.application.name}.log
+    org:
+      revo:
+        env:
+          buckets:
+            video:
+              accessible: false
+              domain-name: ''
+              name: asrevo-video
+            ts:
+              accessible: false
+              domain-name: ''
+              name: asrevo-ts
+            thumb:
+              accessible: true
+              domain-name: ''
+              name: asrevo-thumb
 ---
 apiVersion: v1
 kind: ConfigMap

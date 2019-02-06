@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.feedback.Domain.UserMediaComment;
+import org.revo.core.base.Doamin.UserMediaComment;
 import org.revo.feedback.Repository.UserMediaCommentRepository;
 import org.revo.feedback.Service.Cached.UserMediaCommentCachedService;
 import org.revo.feedback.Service.UserMediaCommentService;

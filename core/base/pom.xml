@@ -11,6 +11,29 @@
 
     <groupId>org.revo.asrevo.core</groupId>
     <artifactId>base</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comcast</groupId>
+            <artifactId>hlsparserj</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>5.3.3</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

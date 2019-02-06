@@ -24,3 +24,19 @@ logging:
   file: /tmp/${spring.application.name}.log
   level:
     org.springframework: debug
+org:
+  revo:
+    env:
+      buckets:
+        video:
+          accessible: false
+          domain-name: ''
+          name: asrevo-video
+        ts:
+          accessible: false
+          domain-name: ''
+          name: asrevo-ts
+        thumb:
+          accessible: true
+          domain-name: ''
+          name: asrevo-thumb

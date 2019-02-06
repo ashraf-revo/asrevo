@@ -1,6 +1,6 @@
 package org.revo.auth.Service;
 
-import org.revo.auth.Domain.User;
+import org.revo.core.base.Doamin.User;
 
 import java.util.List;
 import java.util.Optional;
