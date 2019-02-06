@@ -9,7 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -46,10 +45,6 @@ public class User extends BaseUser {
     private String currentPassword;
     @CreatedDate
     private Date createdDate = new Date();
-
-    @Transient
-    @JsonProperty(access = WRITE_ONLY)
-    private MultipartFile image;
 
     @Transient
     private UserInfo userInfo;
