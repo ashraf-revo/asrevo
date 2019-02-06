@@ -31,7 +31,7 @@ public class Util {
     // copied from spring-cloud/spring-cloud-netflix#1108
 
 
-    public ValveBase valveBase() {
+    private ValveBase valveBase() {
         return new ValveBase() {
             @Override
             public void invoke(Request request, Response response) throws IOException, ServletException {

@@ -161,8 +161,8 @@
                         <image>
                             <name>${docker.username}/${project.artifactId}:${project.version}</name>
                             <build>
-                                <!--<from>java:openjdk-8-jdk-alpine</from>-->
-                                <from>fabric8/java-alpine-openjdk8-jdk</from>
+                                <from>java:openjdk-8-jdk-alpine</from>
+                                <!-- <from>fabric8/java-alpine-openjdk8-jdk</from> -->
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
@@ -170,6 +170,7 @@
                                     <exec>
                                         <arg>java</arg>
                                         <arg>-Djava.security.egd=file:/dev/./urandom</arg>
+                                        <arg>-Dspring.profiles.active=kubernetes</arg>
                                         <arg>-jar</arg>
                                         <arg>/maven/${project.build.finalName}.${project.packaging}</arg>
                                     </exec>
