@@ -2,10 +2,10 @@ package org.revo.tube.Controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.revo.core.base.Doamin.File;
-import org.revo.core.base.Doamin.Ids;
-import org.revo.core.base.Doamin.Master;
-import org.revo.core.base.Doamin.Status;
+import org.revo.core.base.Domain.File;
+import org.revo.core.base.Domain.Ids;
+import org.revo.core.base.Domain.Master;
+import org.revo.core.base.Domain.Status;
 import org.revo.tube.Config.Processor;
 import org.revo.tube.Service.FileService;
 import org.revo.tube.Service.IndexService;

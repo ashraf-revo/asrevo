@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Cached;
 
-import org.revo.core.base.Doamin.MediaInformation;
+import org.revo.core.base.Domain.MediaInformation;
 
 import java.util.List;
 

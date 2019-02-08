@@ -1,7 +1,7 @@
 package org.revo.file.Service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.revo.core.base.Doamin.User;
+import org.revo.core.base.Domain.User;
 import org.revo.file.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

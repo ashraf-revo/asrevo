@@ -1,9 +1,9 @@
 package org.revo.ffmpeg.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.revo.core.base.Doamin.Index;
-import org.revo.core.base.Doamin.IndexImpl;
-import org.revo.core.base.Doamin.Master;
+import org.revo.core.base.Domain.Index;
+import org.revo.core.base.Domain.IndexImpl;
+import org.revo.core.base.Domain.Master;
 import org.revo.ffmpeg.Config.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
-import static org.revo.core.base.Doamin.Resolution.findOne;
-import static org.revo.core.base.Doamin.Resolution.isLess;
+import static org.revo.core.base.Domain.Resolution.findOne;
+import static org.revo.core.base.Domain.Resolution.isLess;
 
 /**
  * Created by ashraf on 23/04/17.

@@ -1,8 +1,8 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.UserMediaComment;
-import org.revo.core.base.Doamin.UserMediaLike;
-import org.revo.core.base.Doamin.UserMediaView;
+import org.revo.core.base.Domain.UserMediaComment;
+import org.revo.core.base.Domain.UserMediaLike;
+import org.revo.core.base.Domain.UserMediaView;
 
 public interface UserMediaEventListener {
 

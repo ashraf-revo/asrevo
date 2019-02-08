@@ -2,7 +2,7 @@ package org.revo.auth.Service.Impl;
 
 import org.revo.auth.Repository.UserRepository;
 import org.revo.auth.Service.UserService;
-import org.revo.core.base.Doamin.User;
+import org.revo.core.base.Domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;

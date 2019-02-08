@@ -6,8 +6,8 @@ import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
 import net.bramp.ffmpeg.job.FFmpegJob;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
-import org.revo.core.base.Doamin.IndexImpl;
-import org.revo.core.base.Doamin.Master;
+import org.revo.core.base.Domain.IndexImpl;
+import org.revo.core.base.Domain.Master;
 import org.revo.ffmpeg.Service.TempFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +26,8 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 import static java.util.stream.Stream.of;
 import static net.bramp.ffmpeg.probe.FFmpegStream.CodecType.VIDEO;
-import static org.revo.core.base.Doamin.IndexImpl.list;
-import static org.revo.core.base.Doamin.Resolution.getLess;
+import static org.revo.core.base.Domain.IndexImpl.list;
+import static org.revo.core.base.Domain.Resolution.getLess;
 import static org.revo.ffmpeg.Util.Utils.format;
 
 @Component

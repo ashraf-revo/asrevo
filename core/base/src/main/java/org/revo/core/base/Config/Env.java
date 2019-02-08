@@ -2,8 +2,8 @@ package org.revo.core.base.Config;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.revo.core.base.Doamin.Bucket;
-import org.revo.core.base.Doamin.User;
+import org.revo.core.base.Domain.Bucket;
+import org.revo.core.base.Domain.User;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;

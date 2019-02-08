@@ -1,4 +1,4 @@
-package org.revo.core.base.Doamin;
+package org.revo.core.base.Domain;
 
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.UserMediaLike;
+import org.revo.core.base.Domain.UserMediaLike;
 
 public interface UserMediaLikeService {
     boolean liked(String id);

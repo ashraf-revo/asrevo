@@ -1,9 +1,9 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.core.base.Doamin.MediaInformation;
-import org.revo.core.base.Doamin.UserMediaComment;
-import org.revo.core.base.Doamin.UserMediaLike;
-import org.revo.core.base.Doamin.UserMediaView;
+import org.revo.core.base.Domain.MediaInformation;
+import org.revo.core.base.Domain.UserMediaComment;
+import org.revo.core.base.Domain.UserMediaLike;
+import org.revo.core.base.Domain.UserMediaView;
 import org.revo.feedback.Service.Cached.MediaInformationCachedService;
 import org.revo.feedback.Service.MediaInformationService;
 import org.revo.feedback.Service.UserMediaEventListener;

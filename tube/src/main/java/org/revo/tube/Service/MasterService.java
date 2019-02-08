@@ -1,9 +1,9 @@
 package org.revo.tube.Service;
 
-import org.revo.core.base.Doamin.Ids;
-import org.revo.core.base.Doamin.Index;
-import org.revo.core.base.Doamin.Master;
-import org.revo.core.base.Doamin.Status;
+import org.revo.core.base.Domain.Ids;
+import org.revo.core.base.Domain.Index;
+import org.revo.core.base.Domain.Master;
+import org.revo.core.base.Domain.Status;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

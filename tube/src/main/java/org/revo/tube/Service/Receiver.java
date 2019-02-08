@@ -1,8 +1,8 @@
 package org.revo.tube.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.revo.core.base.Doamin.Index;
-import org.revo.core.base.Doamin.Master;
+import org.revo.core.base.Domain.Index;
+import org.revo.core.base.Domain.Master;
 import org.revo.tube.Config.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.Input;

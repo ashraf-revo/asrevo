@@ -1,7 +1,7 @@
 package org.revo.tube.Service.Impl;
 
 import org.revo.core.base.Config.Env;
-import org.revo.core.base.Doamin.Index;
+import org.revo.core.base.Domain.Index;
 import org.revo.tube.Repository.IndexRepository;
 import org.revo.tube.Service.IndexService;
 import org.revo.tube.Service.SignedUrlService;
@@ -39,7 +39,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public Mono<String> findOneParsed(String master, String index) {
-        return findOne(index).map(it -> TOString(it.getTags(), s -> signedUrlService.generate("ts", get("hls", master, index, s).toString())));
+        return findOne(index).map(it -> TOString(it.getTags(), s -> signedUrlService.getUrl("ts", get("hls", master, index, s).toString())));
     }
 
 }

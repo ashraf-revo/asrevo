@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.core.base.Doamin.UserMediaLike;
+import org.revo.core.base.Domain.UserMediaLike;
 import org.revo.feedback.Repository.UserMediaLikeRepository;
 import org.revo.feedback.Service.Cached.UserMediaLikeCachedService;
 import org.revo.feedback.Service.UserMediaEventListener;

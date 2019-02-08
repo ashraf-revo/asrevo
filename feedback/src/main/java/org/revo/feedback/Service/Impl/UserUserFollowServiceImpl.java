@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Impl;
 
-import org.revo.core.base.Doamin.UserUserFollow;
+import org.revo.core.base.Domain.UserUserFollow;
 import org.revo.feedback.Repository.UserUserFollowRepository;
 import org.revo.feedback.Service.UserService;
 import org.revo.feedback.Service.UserUserFollowService;

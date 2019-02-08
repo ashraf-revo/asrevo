@@ -1,6 +1,6 @@
 package org.revo.ffmpeg.Service;
 
-import org.revo.core.base.Doamin.Master;
+import org.revo.core.base.Domain.Master;
 
 import java.io.File;
 import java.io.IOException;

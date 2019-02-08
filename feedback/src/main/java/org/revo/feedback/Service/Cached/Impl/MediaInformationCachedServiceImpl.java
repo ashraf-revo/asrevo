@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Cached.Impl;
 
-import org.revo.core.base.Doamin.MediaInformation;
+import org.revo.core.base.Domain.MediaInformation;
 import org.revo.feedback.Service.Cached.MediaInformationCachedService;
 import org.revo.feedback.Service.MediaInformationService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package org.revo.core.base.Doamin;
+package org.revo.core.base.Domain;
 
 public class Bucket {
     private String name;

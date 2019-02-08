@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.Master;
+import org.revo.core.base.Domain.Master;
 import org.revo.feedback.Config.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;

@@ -1,4 +1,4 @@
-package org.revo.core.base.Doamin;
+package org.revo.core.base.Domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -16,22 +16,22 @@ import java.util.Date;
 @Builder
 @ToString
 @Document
-public class UserUserFollow {
+public class UserMediaLike {
     @Id
     private String id;
     @CreatedBy
-    private String from;
-    private String to;
+    private String userId;
+    private String mediaId;
     @CreatedDate
     private Date createdDate = new Date();
 
-    public UserUserFollow() {
+    public UserMediaLike() {
     }
 
-    public UserUserFollow(String id, String from, String to, Date createdDate) {
+    public UserMediaLike(String id, String userId, String mediaId, Date createdDate) {
         this.id = id;
-        this.from = from;
-        this.to = to;
+        this.userId = userId;
+        this.mediaId = mediaId;
         this.createdDate = createdDate;
     }
 }

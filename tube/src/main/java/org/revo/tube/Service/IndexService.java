@@ -1,6 +1,6 @@
 package org.revo.tube.Service;
 
-import org.revo.core.base.Doamin.Index;
+import org.revo.core.base.Domain.Index;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

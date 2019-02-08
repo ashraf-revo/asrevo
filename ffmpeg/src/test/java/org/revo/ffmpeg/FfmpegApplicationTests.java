@@ -16,7 +16,7 @@ public class FfmpegApplicationTests {
     @Test
     public void contextLoads() {
         String generate = signedUrlService
-                .generate("", "8536680.jpeg");
+                .getUrl("thumb", "static/8536680.jpeg");
         System.out.println(generate);
     }
 

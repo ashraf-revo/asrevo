@@ -30,23 +30,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private PasswordEncoder encoder;
 
-
-//    @Bean
-//    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-//        KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("keystore.jks"), "foobar".toCharArray())
-//                .getKeyPair("test");
-//        converter.setKeyPair(keyPair);
-//        return converter;
-//    }
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("revo")
                 .authorizedGrantTypes("authorization_code")
                 .scopes("read", "write")
                 .autoApprove("read")
-                .redirectUris("https://asrevo.cfapps.io/login/oauth2/code/login-client")
+//                .redirectUris("https://asrevo.cfapps.io/login/oauth2/code/login-client")
                 .secret(encoder.encode("revo")).and()
                 .withClient("revo1")
                 .authorizedGrantTypes("authorization_code")
@@ -61,17 +51,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerSecurityConfigurer security) {
         security.checkTokenAccess("isAuthenticated()");
     }
-
-/*    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
-
-    @Bean
-    public TokenStore tokenStore(RedisConnectionFactory factory) {
-        return new RedisTokenStore(factory);
-    }
-*/
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {

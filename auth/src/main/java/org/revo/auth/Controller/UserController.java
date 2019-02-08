@@ -1,8 +1,8 @@
 package org.revo.auth.Controller;
 
 import org.revo.auth.Service.UserService;
-import org.revo.core.base.Doamin.Ids;
-import org.revo.core.base.Doamin.User;
+import org.revo.core.base.Domain.Ids;
+import org.revo.core.base.Domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
 package org.revo.feedback.Service.Cached.Impl;
 
-import org.revo.core.base.Doamin.UserMediaView;
+import org.revo.core.base.Domain.UserMediaView;
 import org.revo.feedback.Repository.UserMediaViewRepository;
 import org.revo.feedback.Service.Cached.UserMediaViewCachedService;
 import org.springframework.beans.factory.annotation.Autowired;

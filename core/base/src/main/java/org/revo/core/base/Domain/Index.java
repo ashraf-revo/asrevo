@@ -1,4 +1,4 @@
-package org.revo.core.base.Doamin;
+package org.revo.core.base.Domain;
 
 import com.comcast.viper.hlsparserj.tags.UnparsedTag;
 import lombok.Getter;

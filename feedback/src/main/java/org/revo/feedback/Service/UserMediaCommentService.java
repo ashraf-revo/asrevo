@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.UserMediaComment;
+import org.revo.core.base.Domain.UserMediaComment;
 
 import java.util.List;
 

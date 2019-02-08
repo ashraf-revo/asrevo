@@ -1,4 +1,4 @@
-package org.revo.core.base.Doamin;
+package org.revo.core.base.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 import static java.util.stream.Collectors.toList;
-import static org.revo.core.base.Doamin.Role.*;
+import static org.revo.core.base.Domain.Role.*;
 
 /**
  * Created by ashraf on 17/04/17.

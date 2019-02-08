@@ -2,7 +2,7 @@ package org.revo.file.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.exception.ZipException;
-import org.revo.core.base.Doamin.File;
+import org.revo.core.base.Domain.File;
 import org.revo.file.Config.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;

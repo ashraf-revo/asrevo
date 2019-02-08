@@ -1,7 +1,7 @@
 package org.revo.file.Service;
 
 import net.lingala.zip4j.exception.ZipException;
-import org.revo.core.base.Doamin.File;
+import org.revo.core.base.Domain.File;
 
 import java.io.IOException;
 import java.nio.file.Path;

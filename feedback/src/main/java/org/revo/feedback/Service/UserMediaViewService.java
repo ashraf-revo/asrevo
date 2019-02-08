@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.UserMediaView;
+import org.revo.core.base.Domain.UserMediaView;
 
 import java.util.List;
 

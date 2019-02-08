@@ -63,10 +63,8 @@ public class GatewayApplication {
                     if (!new PathPatternParser().parse("/auth/**").matches(exchange.getRequest().getPath().pathWithinApplication()) && value != null) {
                         exchange.getResponse().getHeaders().set(name, value.replaceAll("JSESSIONID=[0-9a-zA-Z]+; ", ""));
                         if (value.contains("SESSION=;")) exchange.getResponse().getHeaders().remove(name);
-
                     }
-                }))
-                ;
+                }));
     }
 
     @Bean

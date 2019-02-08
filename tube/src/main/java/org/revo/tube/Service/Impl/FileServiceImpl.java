@@ -1,6 +1,6 @@
 package org.revo.tube.Service.Impl;
 
-import org.revo.core.base.Doamin.File;
+import org.revo.core.base.Domain.File;
 import org.revo.tube.Repository.FileRepository;
 import org.revo.tube.Service.FileService;
 import org.revo.tube.Service.UserService;

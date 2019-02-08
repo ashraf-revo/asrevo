@@ -1,6 +1,6 @@
 package org.revo.feedback.Service;
 
-import org.revo.core.base.Doamin.UserUserFollow;
+import org.revo.core.base.Domain.UserUserFollow;
 
 import java.util.List;
 
