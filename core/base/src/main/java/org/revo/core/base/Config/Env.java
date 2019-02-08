@@ -3,6 +3,7 @@ package org.revo.core.base.Config;
 import lombok.Getter;
 import lombok.Setter;
 import org.revo.core.base.Domain.Bucket;
+import org.revo.core.base.Domain.Service;
 import org.revo.core.base.Domain.User;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -20,4 +21,5 @@ import java.util.Map;
 public class Env {
     private List<User> users = new ArrayList<>();
     private Map<String, Bucket> buckets = new HashMap<>();
+    private Map<String, Service> services = new HashMap<>();
 }

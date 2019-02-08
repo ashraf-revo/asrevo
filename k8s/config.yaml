@@ -10,7 +10,7 @@ data:
         oauth2:
           resourceserver:
             jwt:
-              jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+              jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
       rabbitmq:
         username: zhowcpsz
         password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
@@ -29,6 +29,8 @@ data:
         name: ${spring.application.name}
     logging:
       file: /tmp/${spring.application.name}.log
+      level:
+        org.springframework: debug
     org:
       revo:
         env:
@@ -45,6 +47,10 @@ data:
               accessible: true
               domain-name: ''
               name: asrevo-thumb
+          services:
+            auth:
+              name: auth
+              url: http://35.232.25.155
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -272,7 +278,7 @@ data:
                 token-uri: http://localhost:9999/auth/oauth/token
                 user-info-uri: http://localhost:9999/auth/user
                 user-name-attribute: sub
-                jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+                jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
     server:
       port: 8080
 ---

@@ -48,6 +48,6 @@ spring:
             token-uri: http://localhost:9999/auth/oauth/token
             user-info-uri: http://localhost:9999/auth/user
             user-name-attribute: sub
-            jwk-set-uri: http://localhost:9999/auth/.well-known/jwks.json
+            jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
 server:
   port: 8080
