@@ -129,21 +129,42 @@
             </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.27.2</version>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <version>3.5.42</version>
+                <configuration>
+                    <skip>${project.build.skip}</skip>
+                    <images>
+                        <image>
+                            <name>${docker.username}/${project.artifactId}:${project.version}</name>
+                            <build>
+                                <from>fabric8/java-alpine-openjdk8-jdk</from>
+                                <assembly>
+                                    <basedir>/deployments</basedir>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <env>
+                                    <JAVA_APP_JAR>${project.artifactId}-${project.version}.${packaging}</JAVA_APP_JAR>
+                                    <SPRING_PROFILES_ACTIVE>kubernetes</SPRING_PROFILES_ACTIVE>
+                                </env>
+                            </build>
+                        </image>
+                    </images>
+                    <resources>
+                        <services>
+                            <service>
+                                <name>${artifactId}</name>
+                                <headless>true</headless>
+                            </service>
+                        </services>
+                    </resources>
+                </configuration>
                 <executions>
-                    <execution>
-                        <id>remove</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>remove</goal>
-                        </goals>
-                    </execution>
                     <execution>
                         <id>build</id>
                         <phase>package</phase>
                         <goals>
                             <goal>build</goal>
+                            <goal>resource</goal>
                         </goals>
                     </execution>
                     <execution>
@@ -154,31 +175,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <skip>${project.build.skip}</skip>
-                    <verbose>true</verbose>
-                    <images>
-                        <image>
-                            <name>${docker.username}/${project.artifactId}:${project.version}</name>
-                            <build>
-                                <from>java:openjdk-8-jdk-alpine</from>
-                                <!-- <from>fabric8/java-alpine-openjdk8-jdk</from> -->
-                                <assembly>
-                                    <descriptorRef>artifact</descriptorRef>
-                                </assembly>
-                                <entryPoint>
-                                    <exec>
-                                        <arg>java</arg>
-                                        <arg>-Djava.security.egd=file:/dev/./urandom</arg>
-                                        <arg>-Dspring.profiles.active=kubernetes</arg>
-                                        <arg>-jar</arg>
-                                        <arg>/maven/${project.build.finalName}.${project.packaging}</arg>
-                                    </exec>
-                                </entryPoint>
-                            </build>
-                        </image>
-                    </images>
-                </configuration>
             </plugin>
         </plugins>
     </build>

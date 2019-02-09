@@ -1,5 +1,6 @@
 package org.revo.auth.Config;
 
+import org.revo.core.base.Config.Env;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private Env env;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -36,15 +39,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorizedGrantTypes("authorization_code")
                 .scopes("read", "write")
                 .autoApprove("read")
-//                .redirectUris("https://asrevo.cfapps.io/login/oauth2/code/login-client")
-                .secret(encoder.encode("revo")).and()
-                .withClient("revo1")
-                .authorizedGrantTypes("authorization_code")
-                .scopes("read", "write")
-                .autoApprove("read")
-                .redirectUris("http://localhost:8080/login/oauth2/code/login-client")
-                .secret(encoder.encode("revo1"));
-
+                .redirectUris(env.getServices().get("gateway").getUrl() + "/login/oauth2/code/login-client")
+                .secret(encoder.encode("revo"));
     }
 
     @Override

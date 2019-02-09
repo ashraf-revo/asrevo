@@ -7,23 +7,23 @@ spring:
     gateway:
       routes:
       - id: auth
-        uri: http://localhost:9999/auth/
+        uri: ${org.revo.env.services.auth.url}/auth/
         predicates:
         - Path=/auth/**
       - id: tube
-        uri: http://localhost:8081/
+        uri: ${org.revo.env.services.tube.url}
         predicates:
         - Path=/tube/**
       - id: file
-        uri: http://localhost:8082/
+        uri: ${org.revo.env.services.file.url}
         predicates:
         - Path=/file/**
       - id: feedback
-        uri: http://localhost:8083/
+        uri: ${org.revo.env.services.feedback.url}
         predicates:
         - Path=/feedback/**
       - id: ffmpeg
-        uri: http://localhost:8084/
+        uri: ${org.revo.env.services.ffmpeg.url}
         predicates:
         - Path=/ffmpeg/**
   #      discovery:
@@ -37,16 +37,16 @@ spring:
         registration:
           login-client:
             provider: auth
-            client-id: revo1
-            client-secret: revo1
+            client-id: revo
+            client-secret: revo
             authorization-grant-type: authorization_code
             redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: read
         provider:
           auth:
-            authorization-uri: http://localhost:9999/auth/oauth/authorize
-            token-uri: http://localhost:9999/auth/oauth/token
-            user-info-uri: http://localhost:9999/auth/user
+            authorization-uri: ${org.revo.env.services.auth.url}/auth/oauth/authorize
+            token-uri: ${org.revo.env.services.auth.url}/auth/oauth/token
+            user-info-uri: ${org.revo.env.services.auth.url}/auth/user
             user-name-attribute: sub
             jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
 server:

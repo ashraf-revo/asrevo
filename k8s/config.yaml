@@ -50,7 +50,22 @@ data:
           services:
             auth:
               name: auth
-              url: http://35.232.25.155
+              url: http://localhost:9999
+            tube:
+              name: tube
+              url: http://localhost:8081
+            file:
+              name: file
+              url: http://localhost:8082
+            feedback:
+              name: feedback
+              url: http://localhost:8083
+            ffmpeg:
+              name: ffmpeg
+              url: http://localhost:8084
+            gateway:
+              name: gateway
+              url: http://localhost:8080
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -267,16 +282,16 @@ data:
             registration:
               login-client:
                 provider: auth
-                client-id: revo1
-                client-secret: revo1
+                client-id: revo
+                client-secret: revo
                 authorization-grant-type: authorization_code
                 redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
                 scope: read
             provider:
               auth:
-                authorization-uri: http://localhost:9999/auth/oauth/authorize
-                token-uri: http://localhost:9999/auth/oauth/token
-                user-info-uri: http://localhost:9999/auth/user
+                authorization-uri: ${org.revo.env.services.auth.url}/auth/oauth/authorize
+                token-uri: ${org.revo.env.services.auth.url}/auth/oauth/token
+                user-info-uri: ${org.revo.env.services.auth.url}/auth/user
                 user-name-attribute: sub
                 jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
     server:
