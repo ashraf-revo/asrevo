@@ -44,10 +44,10 @@ spring:
             scope: read
         provider:
           auth:
-            authorization-uri: ${org.revo.env.services.auth.url}/auth/oauth/authorize
-            token-uri: ${org.revo.env.services.auth.url}/auth/oauth/token
-            user-info-uri: ${org.revo.env.services.auth.url}/auth/user
+            authorization-uri: ${org.revo.env.services.gateway.url}/auth/oauth/authorize
+            token-uri: ${org.revo.env.services.gateway.url}/auth/oauth/token
+            user-info-uri: ${org.revo.env.services.gateway.url}/auth/user
             user-name-attribute: sub
-            jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
+            jwk-set-uri: ${org.revo.env.services.gateway.url}/auth/.well-known/jwks.json
 server:
   port: 8080
