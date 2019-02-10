@@ -1,11 +1,10 @@
 package org.revo.auth.Config;
 
-import org.revo.core.base.Config.Env;
+import org.revo.auth.Service.Impl.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -29,18 +28,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private Env env;
-
+    private ClientDetailsServiceImpl clientDetailsServiceImpl;
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("revo")
-                .authorizedGrantTypes("authorization_code")
-                .scopes("read", "write")
-                .autoApprove("read")
-                .redirectUris(env.getServices().get("gateway").getUrl() + "/login/oauth2/code/login-client")
-                .secret(encoder.encode("revo"));
+        clients.withClientDetails(clientDetailsServiceImpl);
     }
 
     @Override
