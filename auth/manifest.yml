@@ -5,4 +5,5 @@ applications:
   disk_quota: 2GB
   instances: 1
   random-route: true
+  buildpack: java_buildpack
   path: target/auth-0.0.1-SNAPSHOT.jar
