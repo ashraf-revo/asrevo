@@ -36,3 +36,14 @@ org:
         password: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
         phone: 1120266849
         type: 111
+      baseClients:
+      - name: revo
+        clientId: revo
+        userId: 5bfd3df1ad8ce6617f9bf635
+        clientSecret: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
+        authorizedGrantTypes: "authorization_code"
+        registeredRedirectUris: "https://asrevo.me"
+        scope:
+        - "read"
+        - "write"
+        autoApproveScopes: "read"

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet'
+          type='text/css'/>
+    <!--<link rel="stylesheet" th:href="'https://'+${@environment.getProperty('org.revo.env.buckets.static.domainname')}+'/auth/src/main/resources/static/css/bootstrap.min.css'"/>-->
+    <!--<link rel="stylesheet" th:href="'https://'+${@environment.getProperty('org.revo.env.buckets.static.domainname')}+'/auth/src/main/resources/static/css/style.css'"/>-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/}" class="btn-link btn alert-link" style="color: white">Home</a>
+    <div class="formHolder login" style="width: 75%">
+        <form action="#" th:action="@{/app}" th:object="${app}" method="post">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="name">Name:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter Name">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="clientId">ClientId:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="clientId" th:field="*{clientId}"
+                           placeholder="Enter ClientId">
+                    <span th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}">ClientId Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="ClientSecret">ClientSecret:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="ClientSecret" th:field="*{clientSecret}"
+                           placeholder="Enter ClientSecret">
+                    <span th:if="${#fields.hasErrors('clientSecret')}"
+                          th:errors="*{clientSecret}">ClientSecret Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="registeredRedirectUris">RegisteredRedirectUris:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="registeredRedirectUris"
+                           th:field="*{registeredRedirectUris}"
+                           placeholder="Enter RegisteredRedirectUris">
+                    <span th:if="${#fields.hasErrors('registeredRedirectUris')}" th:errors="*{registeredRedirectUris}">RegisteredRedirectUris Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="authorizedGrantTypes">AuthorizedGrantTypes:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="authorizedGrantTypes" th:field="*{authorizedGrantTypes}"
+                           placeholder="Enter AuthorizedGrantTypes">
+                    <span th:if="${#fields.hasErrors('authorizedGrantTypes')}" th:errors="*{authorizedGrantTypes}">AuthorizedGrantTypes Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="scope">Scope:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="scope" th:field="*{scope}" placeholder="Enter Scope">
+                    <span th:if="${#fields.hasErrors('scope')}" th:errors="*{scope}">Scope Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="autoApproveScopes">AutoApproveScopes:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="autoApproveScopes" th:field="*{autoApproveScopes}"
+                           placeholder="Enter AutoApproveScopes">
+                    <span th:if="${#fields.hasErrors('autoApproveScopes')}" th:errors="*{autoApproveScopes}">AutoApproveScopes Error</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">ClientId</th>
+                <th scope="col">RegisteredRedirectUris</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="_app,i :${apps}">
+                <th scope="row"><span th:text="${i.index}"></span></th>
+                <td><span th:text="${_app.name}"></span></td>
+                <td><span th:text="${_app.clientId}"></span></td>
+                <td>
+                    <span th:each="it :${_app.registeredRedirectUris}">
+                    <span th:text="${it}"></span>,
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

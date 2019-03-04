@@ -1,34 +1,37 @@
 package org.revo.auth.Service.Impl;
 
-import org.revo.core.base.Config.Env;
+import org.revo.auth.Service.BaseClientService;
+import org.revo.core.base.Domain.BaseClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
 @Service
 public class ClientDetailsServiceImpl implements ClientDetailsService {
+
+
     @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private Env env;
+    private BaseClientService baseClientService;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+        return baseClientService.loadClientByClientId(clientId)
+                .map(ClientDetailsServiceImpl::cast)
+                .orElseThrow(() -> new ClientRegistrationException("not found"));
+
+    }
+
+    private static BaseClientDetails cast(BaseClient baseClient) {
         BaseClientDetails result = new BaseClientDetails();
-        result.setClientId(clientId);
-        result.setAuthorizedGrantTypes(Collections.singletonList("authorization_code"));
-        result.setRegisteredRedirectUri(new HashSet<>(Collections.singletonList(env.getServices().get("gateway").getUrl() + "/login/oauth2/code/login-client")));
-        result.setClientSecret(encoder.encode(clientId));
-        result.setScope(Arrays.asList("read", "write"));
-        result.setAutoApproveScopes(Collections.singletonList("read"));
+        result.setClientId(baseClient.getClientId());
+        result.setClientSecret(baseClient.getClientSecret());
+        result.setAuthorizedGrantTypes(baseClient.getAuthorizedGrantTypes());
+        result.setRegisteredRedirectUri(baseClient.getRegisteredRedirectUris());
+        result.setScope(baseClient.getScope());
+        result.setAutoApproveScopes(baseClient.getAutoApproveScopes());
         return result;
     }
 }

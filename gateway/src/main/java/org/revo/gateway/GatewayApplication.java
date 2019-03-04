@@ -24,7 +24,8 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher.MatchResult.match;
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher.MatchResult.notMatch;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -75,7 +76,7 @@ public class GatewayApplication {
                 .and().oauth2Login()
                 .and().logout()
                 .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
-                .requireCsrfProtectionMatcher(pathMatchers("/auth"))
+                .requireCsrfProtectionMatcher(serverWebExchange -> (serverWebExchange.getRequest().getMethod().matches("GET") || serverWebExchange.getRequest().getPath().toString().startsWith("/auth/")) ? notMatch() : match())
                 .and().build();
     }
 

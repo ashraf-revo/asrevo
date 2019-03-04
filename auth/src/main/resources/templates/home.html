@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Home</title>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet'
@@ -18,14 +18,12 @@
                 <img th:src="${user.imageUrl}" class="user"/>
             </div>
             <div class="form-group">
-                <span th:text="${user.name}"></span>
+                <span sec:authentication="name"></span>
             </div>
             <div class="form-group">
-<!--
-                <a class="btn btn-sm btn-link newAccButton" th:href="@{/settings}">
-                    Settings
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-sm btn-link newAccButton" th:href="@{/app}">
+                    Apps
                 </a>
--->
             </div>
         </div>
 

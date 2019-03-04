@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,12 @@ public class UserServiceImpl implements UserService {
         update.set("enable", true);
         update.set("type", "110");
         mongoOperations.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public String current() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) return ((User) authentication.getPrincipal()).getId();
+        else return null;
     }
 }

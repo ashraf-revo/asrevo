@@ -2,6 +2,7 @@ package org.revo.core.base.Config;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.revo.core.base.Domain.BaseClient;
 import org.revo.core.base.Domain.Bucket;
 import org.revo.core.base.Domain.Service;
 import org.revo.core.base.Domain.User;
@@ -20,6 +21,7 @@ import java.util.Map;
 @ConfigurationProperties("org.revo.env")
 public class Env {
     private List<User> users = new ArrayList<>();
+    private List<BaseClient> baseClients = new ArrayList<>();
     private Map<String, Bucket> buckets = new HashMap<>();
     private Map<String, Service> services = new HashMap<>();
 }

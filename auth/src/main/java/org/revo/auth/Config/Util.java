@@ -5,6 +5,7 @@ import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.bson.types.ObjectId;
+import org.revo.auth.Service.BaseClientService;
 import org.revo.auth.Service.UserService;
 import org.revo.core.base.Config.Env;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,7 +57,7 @@ public class Util {
 
 
     @Bean
-//    @Profile("prod")
+    @Profile("prod")
     public /*EmbeddedServletContainerCustomizer*/WebServerFactoryCustomizer customizer() {
         return factory -> ((/*TomcatEmbeddedServletContainerFactory*/TomcatServletWebServerFactory) factory).addContextValves(valveBase());
     }
@@ -71,13 +73,16 @@ public class Util {
     }
 
     @Bean
-    CommandLineRunner runner(Env env, UserService userService) {
+    CommandLineRunner runner(Env env, UserService userService, BaseClientService baseClientService) {
         return strings -> {
             if (userService.count() == 0) {
                 env.getUsers().forEach(user -> {
                     user.setId(new ObjectId(user.getId()).toString());
                     userService.save(user);
                 });
+            }
+            if (baseClientService.count() == 0) {
+                env.getBaseClients().forEach(baseClientService::save);
             }
         };
     }

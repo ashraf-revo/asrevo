@@ -10,3 +10,11 @@ script: ./mvnw clean install -DskipTests=true -Ddocker.username=ashraf1abdelraso
 cache:
   directories:
   - $HOME/.m2
+deploy:
+- provider: cloudfoundry
+  api: https://api.run.pivotal.io
+  username: ashraf1revo@gmail.com
+  password: "01120266849ASHra;"
+  space: development
+  organization: 4ashraf4revo
+  manifest: auth/manifest.yml

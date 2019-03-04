@@ -1,8 +1,11 @@
 package org.revo.auth.Controller;
 
+import org.revo.auth.Service.BaseClientService;
 import org.revo.auth.Service.UserService;
+import org.revo.core.base.Domain.BaseClient;
 import org.revo.core.base.Domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -27,6 +30,8 @@ public class MainController {
     private ClientDetailsService clientDetailsService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private BaseClientService baseClientService;
 
     @RequestMapping("/oauth/confirm_access")
     public ModelAndView getAccessConfirmation(@ModelAttribute AuthorizationRequest clientAuth, Principal user) {
@@ -39,9 +44,31 @@ public class MainController {
         return "signup";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(value = {"/app"})
+    public ModelAndView app(@AuthenticationPrincipal User user) {
+        System.out.println(baseClientService.findAll(user.getId()).size());
+        return new ModelAndView("app")
+                .addObject("app", new BaseClient().init()).addObject("apps", baseClientService.findAll(user.getId()));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("app")
+    public String app(@Valid BaseClient baseClient, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "app";
+        baseClientService.save(baseClient);
+        return "redirect:/app";
+    }
+
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home(@AuthenticationPrincipal User user) {
         return new ModelAndView("home").addObject("user", user);
+    }
+
+    @GetMapping(value = {"/403"})
+    public ModelAndView e403() {
+        return new ModelAndView("403.html");
     }
 
     @PostMapping("signup")
