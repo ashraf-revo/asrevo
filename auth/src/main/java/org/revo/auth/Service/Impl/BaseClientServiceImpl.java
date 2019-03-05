@@ -41,4 +41,9 @@ public class BaseClientServiceImpl implements BaseClientService {
     public List<BaseClient> findAll(String id) {
         return baseClientRepository.findByUserId(id);
     }
+
+    @Override
+    public void delete(String id) {
+        this.baseClientRepository.delete(new BaseClient(id));
+    }
 }

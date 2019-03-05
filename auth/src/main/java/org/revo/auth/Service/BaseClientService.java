@@ -13,4 +13,6 @@ public interface BaseClientService {
     long count();
 
     List<BaseClient> findAll(String id);
+
+    void delete(String id);
 }

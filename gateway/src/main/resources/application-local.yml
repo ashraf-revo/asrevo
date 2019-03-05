@@ -7,7 +7,7 @@ spring:
     gateway:
       routes:
       - id: auth
-        uri: ${org.revo.env.services.auth.url}/auth/
+        uri: ${org.revo.env.services.auth.url}
         predicates:
         - Path=/auth/**
       - id: tube
@@ -26,10 +26,10 @@ spring:
         uri: ${org.revo.env.services.ffmpeg.url}
         predicates:
         - Path=/ffmpeg/**
-  #      discovery:
-  #        locator:
-  #          enabled: true
-  #          url-expression: "'lb:http://'+serviceId"
+        discovery:
+          locator:
+            enabled: true
+            url-expression: "'lb:http://'+serviceId"
 
   security:
     oauth2:

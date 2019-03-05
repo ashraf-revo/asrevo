@@ -88,12 +88,14 @@
             </thead>
             <tbody>
             <tr th:each="_app,i :${apps}">
-                <th scope="row"><span th:text="${i.index}"></span></th>
+                <th scope="row"><a th:href="@{/app/delete/{id}(id=${_app.id})}">delete <span
+                        th:text="${i.index}"></span></a></th>
                 <td><span th:text="${_app.name}"></span></td>
                 <td><span th:text="${_app.clientId}"></span></td>
                 <td>
                     <span th:each="it :${_app.registeredRedirectUris}">
-                    <span th:text="${it}"></span>,
+                        <span th:text="${it}"></span>
+                        ,
                     </span>
                 </td>
             </tr>

@@ -6,11 +6,12 @@ metadata:
 data:
   default.yaml: |-
     spring:
+      profiles: default
       security:
         oauth2:
           resourceserver:
             jwt:
-              jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
+              jwk-set-uri: ${org.revo.env.services.auth.url}/.well-known/jwks.json
       rabbitmq:
         username: zhowcpsz
         password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
@@ -50,7 +51,7 @@ data:
           services:
             auth:
               name: auth
-              url: http://localhost:9999
+              url: http://localhost:9999/auth
             tube:
               name: tube
               url: http://localhost:8081
@@ -65,7 +66,32 @@ data:
               url: http://localhost:8084
             gateway:
               name: gateway
-              url: http://146.148.102.38
+              url: http://localhost:8080
+    ---
+    spring:
+      profiles: kubernetes
+    org:
+      revo:
+        env:
+          services:
+            auth:
+              name: auth
+              url: http://auth-responsible-oribi.cfapps.io/auth
+            tube:
+              name: tube
+              url: ${TUBE_SERVICE_HOST}:${TUBE_SERVICE_PORT}
+            file:
+              name: file
+              url: ${FILE_SERVICE_HOST}:${FILE_SERVICE_PORT}
+            feedback:
+              name: feedback
+              url: ${FEEDBACK_SERVICE_HOST}:${FEEDBACK_SERVICE_PORT}
+            ffmpeg:
+              name: ffmpeg
+              url: ${FFMPEG_SERVICE_HOST}:${FFMPEG_SERVICE_PORT}
+            gateway:
+              name: gateway
+              url: ${GATEWAY_SERVICE_HOST}:${GATEWAY_SERVICE_PORT}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -274,9 +300,13 @@ data:
         gateway:
           routes:
           - id: auth
-            uri: 'lb:http://auth/auth/'
+            uri: ${org.revo.env.services.auth.url}
             predicates:
             - Path=/auth/**
+            discovery:
+              locator:
+                enabled: true
+                url-expression: "'lb:http://'+serviceId"
       security:
         oauth2:
           client:

@@ -1,9 +1,10 @@
 spring:
+  profiles: default
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${org.revo.env.services.auth.url}/auth/.well-known/jwks.json
+          jwk-set-uri: ${org.revo.env.services.auth.url}/.well-known/jwks.json
   rabbitmq:
     username: zhowcpsz
     password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
@@ -43,7 +44,7 @@ org:
       services:
         auth:
           name: auth
-          url: http://localhost:9999
+          url: http://localhost:9999/auth
         tube:
           name: tube
           url: http://localhost:8081
@@ -59,3 +60,28 @@ org:
         gateway:
           name: gateway
           url: http://localhost:8080
+---
+spring:
+     profiles: kubernetes
+org:
+  revo:
+    env:
+      services:
+        auth:
+          name: auth
+          url: ${AUTH_SERVICE_HOST}:${AUTH_SERVICE_PORT}
+        tube:
+          name: tube
+          url: ${TUBE_SERVICE_HOST}:${TUBE_SERVICE_PORT}
+        file:
+          name: file
+          url: ${FILE_SERVICE_HOST}:${FILE_SERVICE_PORT}
+        feedback:
+          name: feedback
+          url: ${FEEDBACK_SERVICE_HOST}:${FEEDBACK_SERVICE_PORT}
+        ffmpeg:
+          name: ffmpeg
+          url: ${FFMPEG_SERVICE_HOST}:${FFMPEG_SERVICE_PORT}
+        gateway:
+          name: gateway
+          url: ${GATEWAY_SERVICE_HOST}:${GATEWAY_SERVICE_PORT}

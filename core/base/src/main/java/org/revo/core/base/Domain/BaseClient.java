@@ -35,4 +35,11 @@ public class BaseClient {
         this.authorities = Collections.emptyList();
         return this;
     }
+
+    public BaseClient() {
+    }
+
+    public BaseClient(String id) {
+        this.id = id;
+    }
 }

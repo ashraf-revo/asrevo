@@ -61,6 +61,13 @@ public class MainController {
         return "redirect:/app";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("app/delete/{id}")
+    public String delete(@PathVariable("id") String id) {
+        baseClientService.delete(id);
+        return "redirect:/app";
+    }
+
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home(@AuthenticationPrincipal User user) {
         return new ModelAndView("home").addObject("user", user);

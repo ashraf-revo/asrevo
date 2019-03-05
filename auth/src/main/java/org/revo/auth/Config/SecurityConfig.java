@@ -29,10 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.exceptionHandling().accessDeniedPage("/403").and()
-                .authorizeRequests().antMatchers("/", "/home", "/app").authenticated().anyRequest().permitAll()
+                .authorizeRequests().antMatchers("/", "/home", "/app","/app/delete/*").authenticated().anyRequest().permitAll()
                 .and().formLogin().loginPage("/signin").defaultSuccessUrl("/")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-                .and().requestMatchers().antMatchers("/403", "/home", "/app", "/", "/done", "/active/*", "/signin", "/signup", "/signout", "/oauth/authorize", "/oauth/token", "/oauth/confirm_access");
+                .and().requestMatchers().antMatchers("/403", "/home", "/app","/app/delete/*", "/", "/done", "/active/*", "/signin", "/signup", "/signout", "/oauth/authorize", "/oauth/token", "/oauth/confirm_access");
 
     }
 
