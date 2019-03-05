@@ -179,7 +179,7 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: ashraf1abdelrasool/gateway:0.0.1-SNAPSHOT
+        image: ashraf1abdelrasool/gateway:0.0.7-SNAPSHOT
         ports:
         - containerPort: 8080
 ---
