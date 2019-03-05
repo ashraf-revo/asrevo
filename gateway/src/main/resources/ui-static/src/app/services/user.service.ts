@@ -35,7 +35,7 @@ export class UserService {
 
   logout(): Observable<Object> {
     return this._http.get(this.url + 'signout', {responseType: 'text'})
-      .pipe(mergeMap(it => this._http.get(this._defaultService.url + '/signout')));
+      .pipe(mergeMap(it => this._http.post(this._defaultService.url + '/signout',{})));
   }
 
 }

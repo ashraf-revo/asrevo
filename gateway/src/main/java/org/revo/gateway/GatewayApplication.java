@@ -10,13 +10,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.WebFilterExchange;
-import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.session.data.redis.config.annotation.web.server.EnableRedisWebSession;
 import org.springframework.web.reactive.function.server.RequestPredicate;
@@ -79,7 +76,7 @@ public class GatewayApplication {
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
-                .logoutSuccessHandler((webFilterExchange, authentication) -> {
+                .logoutUrl("/signout").logoutSuccessHandler((webFilterExchange, authentication) -> {
                     webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
                     return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
                 })
