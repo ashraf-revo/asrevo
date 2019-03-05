@@ -1,0 +1,201 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default
+data:
+  default.yaml: |-
+    spring:
+      security:
+        oauth2:
+          resourceserver:
+            jwt:
+              jwk-set-uri: ${org.revo.env.services.auth.url}/.well-known/jwks.json
+      rabbitmq:
+        username: zhowcpsz
+        password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
+        host: mosquito.rmq.cloudamqp.com
+        virtual-host: zhowcpsz
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: ["*"]
+      endpoint:
+        health:
+          show-details: always
+    info:
+      app:
+        name: ${spring.application.name}
+    logging:
+      file: /tmp/${spring.application.name}.log
+      level:
+        org.springframework: debug
+    org:
+      revo:
+        env:
+          buckets:
+            video:
+              accessible: false
+              domain-name: ''
+              name: asrevo-video
+            ts:
+              accessible: false
+              domain-name: ''
+              name: asrevo-ts
+            thumb:
+              accessible: true
+              domain-name: ''
+              name: asrevo-thumb
+          services:
+            auth:
+              name: auth
+              url: http://localhost:9999/auth
+            tube:
+              name: tube
+              url: http://localhost:8081
+            file:
+              name: file
+              url: http://localhost:8082
+            feedback:
+              name: feedback
+              url: http://localhost:8083
+            ffmpeg:
+              name: ffmpeg
+              url: http://localhost:8084
+            gateway:
+              name: gateway
+              url: http://localhost:8080
+    ---
+    spring:
+      profiles: kubernetes
+    org:
+      revo:
+        env:
+          services:
+            auth:
+              name: auth
+              url: http://auth-responsible-oribi.cfapps.io/auth
+            tube:
+              name: tube
+              url: ${TUBE_SERVICE_HOST}:${TUBE_SERVICE_PORT}
+            file:
+              name: file
+              url: ${FILE_SERVICE_HOST}:${FILE_SERVICE_PORT}
+            feedback:
+              name: feedback
+              url: ${FEEDBACK_SERVICE_HOST}:${FEEDBACK_SERVICE_PORT}
+            ffmpeg:
+              name: ffmpeg
+              url: ${FFMPEG_SERVICE_HOST}:${FFMPEG_SERVICE_PORT}
+            gateway:
+              name: gateway
+              url: http://35.194.36.173
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway
+data:
+  gateway.yaml: |-
+    spring:
+      redis:
+        host: redis-11283.c8.us-east-1-3.ec2.cloud.redislabs.com
+        password: OTsAwaP3t11v3Z20FU2c6xioskDhDPxX
+        port: 11283
+      cloud:
+        gateway:
+          routes:
+          - id: auth
+            uri: ${org.revo.env.services.auth.url}
+            predicates:
+            - Path=/auth/**
+            discovery:
+              locator:
+                enabled: true
+                url-expression: "'lb:http://'+serviceId"
+      security:
+        oauth2:
+          client:
+            registration:
+              login-client:
+                provider: auth
+                client-id: revo
+                client-secret: revo
+                authorization-grant-type: authorization_code
+                redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+                scope: read
+            provider:
+              auth:
+                authorization-uri: ${org.revo.env.services.gateway.url}/auth/oauth/authorize
+                token-uri: ${org.revo.env.services.gateway.url}/auth/oauth/token
+                user-info-uri: ${org.revo.env.services.gateway.url}/auth/user
+                user-name-attribute: sub
+                jwk-set-uri: ${org.revo.env.services.gateway.url}/auth/.well-known/jwks.json
+    server:
+      port: 8080
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: reader
+rules:
+- apiGroups: [""]
+  resources: ["routes","pods","pods/log","pods/status","services","services/proxy","configmaps","endpoints","secrets","serviceaccounts","namespaces","namespaces/status","resourcequotas/status","events","bindings","replicationcontrollers","persistentvolumeclaims"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: reader
+roleRef:
+  kind: Role
+  name: reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: default
+  apiGroup: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  selector:
+    matchLabels:
+      run: gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: ashraf1abdelrasool/gateway:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    run: gateway
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  loadBalancerIP: 35.194.36.173
+  selector:
+    run: gateway
