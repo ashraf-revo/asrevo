@@ -57,7 +57,6 @@ public class Util {
 
 
     @Bean
-    @Profile("prod")
     public /*EmbeddedServletContainerCustomizer*/WebServerFactoryCustomizer customizer() {
         return factory -> ((/*TomcatEmbeddedServletContainerFactory*/TomcatServletWebServerFactory) factory).addContextValves(valveBase());
     }
