@@ -25,8 +25,7 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher.MatchResult.match;
-import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher.MatchResult.notMatch;
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -80,11 +79,9 @@ public class GatewayApplication {
                     webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
                     return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
                 })
-
                 .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
-                .requireCsrfProtectionMatcher(serverWebExchange -> (serverWebExchange.getRequest().getMethod().matches("GET") || serverWebExchange.getRequest().getPath().toString().startsWith("/auth/")) ? notMatch() : match())
+                .requireCsrfProtectionMatcher(pathMatchers("/auth"))
                 .and().build();
     }
-
 }
 
