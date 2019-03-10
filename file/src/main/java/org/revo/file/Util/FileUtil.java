@@ -75,7 +75,7 @@ public class FileUtil {
 
     public static void download(org.revo.core.base.Domain.File file, File to) throws IOException {
         URLConnection conn = new URL(file.getUrl()).openConnection();
-        conn.setRequestProperty("X-FORWARDED-FOR", file.getIp());
+        /*conn.setRequestProperty("X-FORWARDED-FOR", file.getIp());*/
         FileUtils.copyInputStreamToFile(conn.getInputStream(), to);
     }
 

@@ -65,7 +65,7 @@ data:
               url: http://${FFMPEG_SERVICE_HOST:localhost}:${FFMPEG_SERVICE_PORT:8084}
             gateway:
               name: gateway
-              url: http://35.222.24.177
+              url: http://35.184.33.214
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -422,6 +422,6 @@ spec:
     port: 80
     targetPort: 8080
   type: LoadBalancer
-  loadBalancerIP: 35.222.24.177
+  loadBalancerIP: 35.184.33.214
   selector:
     run: gateway
