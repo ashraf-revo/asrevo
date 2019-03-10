@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.io.File;
 import java.io.IOException;
 
-//import static org.revo.core.cli.FfmpegCLI.init;
+import static org.revo.core.cli.FfmpegCLI.init;
 
 /**
  * Created by ashraf on 23/04/17.
@@ -19,7 +19,7 @@ public class Util {
     @Bean
     public FFmpegExecutor executor() {
         try {
-//            init();
+            init();
             FFprobe ffprobe = new FFprobe(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffprobe");
             FFmpeg ffmpeg = new FFmpeg(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffmpeg");
             return new FFmpegExecutor(ffmpeg, ffprobe);

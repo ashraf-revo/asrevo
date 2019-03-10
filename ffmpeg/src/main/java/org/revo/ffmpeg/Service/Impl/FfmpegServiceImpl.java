@@ -11,8 +11,8 @@ import org.revo.core.base.Domain.Index;
 import org.revo.core.base.Domain.IndexImpl;
 import org.revo.core.base.Domain.Master;
 import org.revo.ffmpeg.Service.FfmpegService;
-import org.revo.ffmpeg.Service.S3Service;
 import org.revo.ffmpeg.Service.SignedUrlService;
+import org.revo.ffmpeg.Service.StorageService;
 import org.revo.ffmpeg.Util.FfmpegUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import static org.revo.ffmpeg.Util.Utils.read;
 @Service
 public class FfmpegServiceImpl implements FfmpegService {
     @Autowired
-    private S3Service s3Service;
+    private StorageService storageService;
     @Autowired
     private FFprobe fFprobe;
     @Autowired
@@ -48,7 +48,7 @@ public class FfmpegServiceImpl implements FfmpegService {
         IndexImpl index = master.getImpls().get(0);
         Path converted = ffmpegUtils.doConversion(probe(master, get(master.getId(), master.getId()).toString()), index);
         index.setExecution(System.currentTimeMillis() - start);
-        s3Service.pushMediaDelete(getPath(master, get(index.getIndex(), index.getIndex()).toString()), converted.toFile());
+        storageService.push("video", getPath(master, get(index.getIndex(), index.getIndex()).toString()), converted.toFile());
         master.setImpls(Collections.singletonList(index));
         return master;
     }
@@ -69,8 +69,7 @@ public class FfmpegServiceImpl implements FfmpegService {
             index.setCodecs(it.getAttributes().get("CODECS"));
             index.setResolution(it.getAttributes().get("RESOLUTION"));
         });
-        Path base = converted.getParent().getParent().getParent().getParent();
-        s3Service.push(base, converted.getParent().getParent());
+        storageService.pushTsVideo(master, converted);
         return index;
     }
 
@@ -84,17 +83,17 @@ public class FfmpegServiceImpl implements FfmpegService {
         FFmpegProbeResult probe = probe(master, get(master.getId(), master.getSplits().get((master.getSplits().size() / 2))).toString());
         for (Path png : ffmpegUtils.image(probe, master.getId(), "png")) {
             File file = png.toFile();
-            s3Service.pushImageDelete(getPath(master, master.getId() + ".png"), file);
+            storageService.push("thumb", getPath(master, master.getId() + ".png"), file);
         }
 /*
         for (Path jpeg : ffmpegUtils.image(probe, master.getId(), "jpeg")) {
             File file = jpeg.toFile();
-            s3Service.pushImageDelete(master.getId() + "/" + jpeg.getFileName().toString(), file);
+            storageService.pushImageDelete(master.getId() + "/" + jpeg.getFileName().toString(), file);
         }
 */
         for (Path png : ffmpegUtils.image(probe, master.getId(), "webp")) {
             File file = png.toFile();
-            s3Service.pushImageDelete(getPath(master, master.getId() + ".webp"), file);
+            storageService.push("thumb", getPath(master, master.getId() + ".webp"), file);
         }
         master.setImage(signedUrlService.getUrl("thumb", getPath(master, master.getId())));
         return master;
@@ -104,7 +103,7 @@ public class FfmpegServiceImpl implements FfmpegService {
     public Master split(Master master) throws IOException {
         Path videos = ffmpegUtils.split(probe(master, get(master.getId(), master.getId()).toString()), master);
         master.setSplits(Files.walk(videos).filter(Files::isRegularFile).map(Path::toString).map(FilenameUtils::getBaseName).collect(Collectors.toList()));
-        s3Service.pushSplitedVideo(master, videos);
+        storageService.pushSplitedVideo(master, videos);
         return master;
     }
 

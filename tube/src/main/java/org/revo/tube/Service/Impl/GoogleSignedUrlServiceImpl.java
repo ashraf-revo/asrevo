@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static com.google.cloud.storage.BlobInfo.newBuilder;
 
 @Service
-public class SignedUrlServiceImpl implements SignedUrlService {
+public class GoogleSignedUrlServiceImpl implements SignedUrlService {
     @Autowired
     private Storage storage;
     @Autowired

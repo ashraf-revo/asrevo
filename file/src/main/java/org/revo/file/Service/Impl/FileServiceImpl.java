@@ -53,10 +53,10 @@ public class FileServiceImpl implements FileService {
                             master.setFile(file.getId());
                             master.setExt(getExtension(it.toString()));
                             return master;
-                        })).entrySet().forEach(it -> {
-                    storageService.push("video", file.getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId(), it.getKey().toFile());
-                    log.info("send tube_store " + it.getValue().getId());
-                    processor.tube_store().send(MessageBuilder.withPayload(it.getValue()).build());
+                        })).forEach((key, value) -> {
+                    storageService.push("video", file.getId() + "/" + value.getId() + "/" + value.getId() + "/" + value.getId(), key.toFile());
+                    log.info("send tube_store " + value.getId());
+                    processor.tube_store().send(MessageBuilder.withPayload(value).build());
                 });
             }
         }
