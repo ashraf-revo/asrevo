@@ -1,9 +1,11 @@
 package org.revo.file.Config;
 
 import net.minidev.json.JSONArray;
+import org.revo.core.base.Config.AnonymousAuthenticationWebFilter;
 import org.springframework.boot.actuate.autoconfigure.security.reactive.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -22,7 +24,7 @@ import static org.springframework.security.core.authority.AuthorityUtils.createA
 public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        return http
+        return http.addFilterAt(AnonymousAuthenticationWebFilter.build(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .authorizeExchange()
                 .matchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
                 .anyExchange().authenticated()
