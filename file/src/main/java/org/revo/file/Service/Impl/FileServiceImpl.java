@@ -7,7 +7,7 @@ import org.revo.core.base.Domain.File;
 import org.revo.core.base.Domain.Master;
 import org.revo.file.Config.Processor;
 import org.revo.file.Service.FileService;
-import org.revo.file.Service.S3Service;
+import org.revo.file.Service.StorageService;
 import org.revo.file.Service.TempFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
@@ -32,7 +32,7 @@ import static org.revo.file.Util.FileUtil.walk;
 @Slf4j
 public class FileServiceImpl implements FileService {
     @Autowired
-    private S3Service s3Service;
+    private StorageService storageService;
     @Autowired
     private Processor processor;
     @Autowired
@@ -54,9 +54,9 @@ public class FileServiceImpl implements FileService {
                             master.setExt(getExtension(it.toString()));
                             return master;
                         })).entrySet().forEach(it -> {
-                    s3Service.push("video", file.getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId(), it.getKey().toFile());
+                    storageService.push("video", file.getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId() + "/" + it.getValue().getId(), it.getKey().toFile());
                     log.info("send tube_store " + it.getValue().getId());
-                    processor.tube_store().send(MessageBuilder.withPayload(it).build());
+                    processor.tube_store().send(MessageBuilder.withPayload(it.getValue()).build());
                 });
             }
         }

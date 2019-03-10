@@ -2,7 +2,7 @@ package org.revo.file.Service.Impl;
 
 import com.google.cloud.storage.Storage;
 import org.revo.core.base.Config.Env;
-import org.revo.file.Service.S3Service;
+import org.revo.file.Service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import static com.google.cloud.storage.BlobInfo.newBuilder;
  * Created by ashraf on 15/04/17.
  */
 @Service
-public class S3ServiceImpl implements S3Service {
+public class GoogleStorageServiceImpl implements StorageService {
     @Autowired
     private Storage storage;
     @Autowired
