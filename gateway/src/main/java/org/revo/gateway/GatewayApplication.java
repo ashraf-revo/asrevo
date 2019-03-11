@@ -10,7 +10,6 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -37,7 +36,8 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @Slf4j
 public class GatewayApplication {
     private static final List<String> services = Arrays.asList("/auth/**", "/tube/**", "/file/**", "/feedback/**", "/ffmpeg/**");
-
+    @Value("${gateway.default.svc.cluster.local}")
+    public String url;
     private final RequestPredicate requestPredicate = serverRequest -> !services.stream().map(it -> new PathPatternParser().parse(it)).anyMatch(it -> it.matches(serverRequest.exchange().getRequest().getPath().pathWithinApplication())) && !serverRequest.path().contains(".");
 
 
@@ -48,7 +48,7 @@ public class GatewayApplication {
 
     @Bean
     public RouterFunction<ServerResponse> indexRouter(@Value("classpath:/static/index.html") final Resource indexHtml) {
-        return route(requestPredicate, request -> ok().contentType(MediaType.TEXT_HTML).syncBody(indexHtml));
+        return route(requestPredicate, request -> ok().body(Mono.just(url), String.class));
     }
 
 
@@ -88,7 +88,7 @@ public class GatewayApplication {
     }
 
     @Bean
-    CommandLineRunner runner(@Value("${gateway.default.svc.cluster.local}") String url) {
+    CommandLineRunner runner() {
         return (arts) -> log.info("org.revo.url", url);
     }
 }
