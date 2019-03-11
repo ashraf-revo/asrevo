@@ -27,7 +27,7 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http.addFilterAt(AnonymousAuthenticationWebFilter.build(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .authorizeExchange()
-                .matchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
+                .matchers(EndpointRequest.toAnyEndpoint()).permitAll()/*.hasRole("ACTUATOR")*/
                 .pathMatchers(HttpMethod.POST, "/api/search").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/media/info").permitAll()
                 .pathMatchers(HttpMethod.POST, "/api/media/view/**").permitAll()
