@@ -1,6 +1,8 @@
 package org.revo.gateway;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -32,6 +34,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableRedisWebSession
+@Slf4j
 public class GatewayApplication {
     private static final List<String> services = Arrays.asList("/auth/**", "/tube/**", "/file/**", "/feedback/**", "/ffmpeg/**");
 
@@ -82,6 +85,13 @@ public class GatewayApplication {
                 .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                 .requireCsrfProtectionMatcher(pathMatchers("/auth"))
                 .and().build();
+    }
+
+    @Bean
+    CommandLineRunner runner(@Value("${gateway.default.svc.cluster.local}") String url) {
+        return (arts) -> {
+            log.debug("org.revo.url", url);
+        };
     }
 }
 
