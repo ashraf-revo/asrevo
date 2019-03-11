@@ -89,9 +89,7 @@ public class GatewayApplication {
 
     @Bean
     CommandLineRunner runner(@Value("${gateway.default.svc.cluster.local}") String url) {
-        return (arts) -> {
-            log.debug("org.revo.url", url);
-        };
+        return (arts) -> log.info("org.revo.url", url);
     }
 }
 
