@@ -2,7 +2,6 @@ package org.revo.gateway;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,7 +17,6 @@ import org.springframework.security.oauth2.client.web.server.ServerOAuth2Authori
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.session.data.redis.config.annotation.web.server.EnableRedisWebSession;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -86,11 +84,6 @@ public class GatewayApplication {
                 .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                 .requireCsrfProtectionMatcher(pathMatchers("/auth"))
                 .and().build();
-    }
-
-    @Bean
-    CommandLineRunner runner(@Value("${gateway.default.svc.cluster.local}") String url) {
-        return (arts) -> log.info("org.revo.url", url);
     }
 }
 
