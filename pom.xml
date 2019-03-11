@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.revo</groupId>
     <artifactId>asrevo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${asrevo.version}</version>
     <packaging>pom</packaging>
     <name>asrevo</name>
     <description>Demo project for Spring Boot</description>
@@ -20,6 +20,7 @@
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <docker.username>ashraf1abdelrasool</docker.username>
         <project.build.skip>true</project.build.skip>
+        <asrevo.version>1.0.0-SNAPSHOT</asrevo.version>
     </properties>
     <modules>
         <module>auth</module>

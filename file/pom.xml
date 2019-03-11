@@ -9,7 +9,6 @@
     </parent>
     <groupId>org.revo.asrevo</groupId>
     <artifactId>file</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>file</name>
     <description>Demo project for Spring Boot</description>
     <properties>
