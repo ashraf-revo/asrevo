@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.revo</groupId>
         <artifactId>asrevo</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>org.revo.asrevo</groupId>
     <artifactId>feedback</artifactId>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.revo.asrevo.core</groupId>
             <artifactId>base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${asrevo.version}</version>
         </dependency>
     </dependencies>
 </project>
