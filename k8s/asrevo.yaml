@@ -48,21 +48,6 @@ data:
               domain-name: ''
               name: asrevo-thumb
           services:
-            auth:
-              name: auth
-              url: http://${AUTH_SERVICE_HOST:localhost}:${AUTH_SERVICE_PORT:9999}
-            tube:
-              name: tube
-              url: http://${TUBE_SERVICE_HOST:localhost}:${TUBE_SERVICE_PORT:8081}
-            file:
-              name: file
-              url: http://${FILE_SERVICE_HOST:localhost}:${FILE_SERVICE_PORT:8082}
-            feedback:
-              name: feedback
-              url: http://${FEEDBACK_SERVICE_HOST:localhost}:${FEEDBACK_SERVICE_PORT:8083}
-            ffmpeg:
-              name: ffmpeg
-              url: http://${FFMPEG_SERVICE_HOST:localhost}:${FFMPEG_SERVICE_PORT:8084}
             gateway:
               name: gateway
               url: http://35.193.51.51

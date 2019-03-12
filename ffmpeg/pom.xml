@@ -9,6 +9,7 @@
     </parent>
     <groupId>org.revo.asrevo</groupId>
     <artifactId>ffmpeg</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <name>ffmpeg</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -46,17 +47,17 @@
         <dependency>
             <groupId>org.revo.asrevo.core</groupId>
             <artifactId>cli</artifactId>
-            <version>${asrevo.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.revo.asrevo.core</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>bson</artifactId>
             <version>3.6.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.revo.asrevo.core</groupId>
-            <artifactId>base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <repositories>

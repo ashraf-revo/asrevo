@@ -9,6 +9,7 @@
     </parent>
     <groupId>org.revo.asrevo</groupId>
     <artifactId>feedback</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <name>feedback</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -68,7 +69,7 @@
         <dependency>
             <groupId>org.revo.asrevo.core</groupId>
             <artifactId>base</artifactId>
-            <version>${asrevo.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

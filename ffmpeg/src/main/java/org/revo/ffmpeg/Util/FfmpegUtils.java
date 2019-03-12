@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -114,7 +115,7 @@ public class FfmpegUtils {
         return out;
     }
 
-    public Path split(FFmpegProbeResult probe, Master master) throws IOException {
+    public Path split(FFmpegProbeResult probe, Master master) {
         Path out = tempFileService.tempFile("split", master.getId() + File.separator + master.getId() + File.separator + master.getId() + "_%d." + master.getExt());
         tempFileService.mkdir(out.getParent().getParent());
         tempFileService.mkdir(out.getParent());
@@ -130,5 +131,15 @@ public class FfmpegUtils {
         job.run();
         log.info("job " + job.getState());
         return out.getParent();
+    }
+
+    public void version() {
+        FFmpegJob job = executor.createJob(new FFmpegBuilder() {
+            @Override
+            public List<String> build() {
+                return Collections.singletonList("-version");
+            }
+        });
+        job.run();
     }
 }
