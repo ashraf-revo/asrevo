@@ -321,6 +321,7 @@ spec:
       containers:
       - name: auth
         image: ashraf1abdelrasool/auth:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
         ports:
         - containerPort: 9999
 ---
@@ -359,6 +360,7 @@ spec:
       containers:
       - name: tube
         image: ashraf1abdelrasool/tube:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
 ---
@@ -397,6 +399,7 @@ spec:
       containers:
       - name: file
         image: ashraf1abdelrasool/file:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
         ports:
         - containerPort: 8082
 ---
@@ -435,6 +438,7 @@ spec:
       containers:
       - name: ffmpeg
         image: ashraf1abdelrasool/ffmpeg:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
         ports:
         - containerPort: 8084
 ---
@@ -473,6 +477,7 @@ spec:
       containers:
       - name: gateway
         image: ashraf1abdelrasool/gateway:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---

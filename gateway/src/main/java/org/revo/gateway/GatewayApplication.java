@@ -71,9 +71,14 @@ public class GatewayApplication {
     }
 
     @Bean
-    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        return http
+    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository) {
+        return http.exceptionHandling()
+                .accessDeniedHandler((serverWebExchange, e) -> cookieServerCsrfTokenRepository.loadToken(serverWebExchange).switchIfEmpty(cookieServerCsrfTokenRepository.generateToken(serverWebExchange)).flatMap(it -> {
+                    serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return serverWebExchange.getResponse().setComplete();
+                })).and()
                 .authorizeExchange()
+                .pathMatchers("/auth/user").authenticated()
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
@@ -81,9 +86,15 @@ public class GatewayApplication {
                     webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
                     return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
                 })
-                .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
+                .and().csrf().csrfTokenRepository(cookieServerCsrfTokenRepository)
                 .requireCsrfProtectionMatcher(pathMatchers("/auth"))
                 .and().build();
     }
+
+    @Bean
+    public CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository() {
+        return CookieServerCsrfTokenRepository.withHttpOnlyFalse();
+    }
+
 }
 
