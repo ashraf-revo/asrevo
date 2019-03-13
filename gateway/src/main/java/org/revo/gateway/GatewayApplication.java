@@ -8,13 +8,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.web.server.AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
@@ -28,6 +26,7 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.matchers;
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -74,22 +73,14 @@ public class GatewayApplication {
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository) {
-        return http.exceptionHandling()
-                .accessDeniedHandler((serverWebExchange, e) -> cookieServerCsrfTokenRepository.loadToken(serverWebExchange).switchIfEmpty(cookieServerCsrfTokenRepository.generateToken(serverWebExchange)).flatMap(it -> {
-                    serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return serverWebExchange.getResponse().setComplete();
-                })).and()
+        return http
                 .authorizeExchange()
                 .pathMatchers("/auth/user").authenticated()
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
-                .logoutUrl("/signout").logoutSuccessHandler((webFilterExchange, authentication) -> {
-                    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
-                    return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
-                })
                 .and().csrf().csrfTokenRepository(cookieServerCsrfTokenRepository)
-                .requireCsrfProtectionMatcher(pathMatchers("/auth"))
+                .requireCsrfProtectionMatcher(matchers(pathMatchers("/auth"), pathMatchers(HttpMethod.POST, "/")))
                 .and().build();
     }
 
@@ -97,13 +88,5 @@ public class GatewayApplication {
     public CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository() {
         return CookieServerCsrfTokenRepository.withHttpOnlyFalse();
     }
-
-    @Bean
-    public ServerOAuth2AuthorizedClientRepository authorizedClientRepository(
-            final ReactiveOAuth2AuthorizedClientService authorizedClientService) {
-
-        return new AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository(authorizedClientService);
-
-}
 }
 
