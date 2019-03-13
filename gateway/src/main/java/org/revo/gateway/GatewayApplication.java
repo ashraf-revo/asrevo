@@ -12,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.web.server.AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
@@ -74,22 +72,14 @@ public class GatewayApplication {
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository) {
-        return http.exceptionHandling()
-                .accessDeniedHandler((serverWebExchange, e) -> cookieServerCsrfTokenRepository.loadToken(serverWebExchange).switchIfEmpty(cookieServerCsrfTokenRepository.generateToken(serverWebExchange)).flatMap(it -> {
-                    serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return serverWebExchange.getResponse().setComplete();
-                })).and()
+        return http
                 .authorizeExchange()
                 .pathMatchers("/auth/user").authenticated()
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
-                .logoutUrl("/signout").logoutSuccessHandler((webFilterExchange, authentication) -> {
-                    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
-                    return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
-                })
                 .and().csrf().csrfTokenRepository(cookieServerCsrfTokenRepository)
-                .requireCsrfProtectionMatcher(pathMatchers("/auth"))
+                .requireCsrfProtectionMatcher(pathMatchers("/", "/auth"))
                 .and().build();
     }
 
@@ -97,13 +87,5 @@ public class GatewayApplication {
     public CookieServerCsrfTokenRepository cookieServerCsrfTokenRepository() {
         return CookieServerCsrfTokenRepository.withHttpOnlyFalse();
     }
-
-    @Bean
-    public ServerOAuth2AuthorizedClientRepository authorizedClientRepository(
-            final ReactiveOAuth2AuthorizedClientService authorizedClientService) {
-
-        return new AuthenticatedPrincipalServerOAuth2AuthorizedClientRepository(authorizedClientService);
-    
-}
 }
 
