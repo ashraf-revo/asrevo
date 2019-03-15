@@ -8,8 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -25,7 +23,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.pattern.PathPatternParser;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,31 +71,20 @@ public class GatewayApplication {
     }
 
     @Bean
-    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, CookieServerCsrfTokenRepository csrfTokenRepository) {
+    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http
-                .exceptionHandling().accessDeniedHandler((exchange, denied) -> Mono.defer(() -> Mono.just(exchange.getResponse()))
-                        .flatMap(response -> csrfTokenRepository.loadToken(exchange).switchIfEmpty(csrfTokenRepository.generateToken(exchange)).map(it -> {
-                                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                                    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-                                    DataBufferFactory dataBufferFactory = response.bufferFactory();
-                                    return dataBufferFactory.wrap(denied.getMessage().getBytes(Charset.defaultCharset()));
-                                }).flatMap(it -> response.writeWith(Mono.just(it))
-                                        .doOnError(error -> DataBufferUtils.release(it)))
-                        ))
-                .and()
                 .authorizeExchange()
                 .pathMatchers("/auth/user").authenticated()
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
-                .and().csrf().csrfTokenRepository(csrfTokenRepository)
+                .logoutUrl("/signout").logoutSuccessHandler((webFilterExchange, authentication) -> {
+                    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
+                    return webFilterExchange.getChain().filter(webFilterExchange.getExchange());
+                })
+                .and().csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                 .requireCsrfProtectionMatcher(pathMatchers("/auth"))
                 .and().build();
-    }
-
-    @Bean
-    public CookieServerCsrfTokenRepository csrfTokenRepository() {
-        return CookieServerCsrfTokenRepository.withHttpOnlyFalse();
     }
 }
 

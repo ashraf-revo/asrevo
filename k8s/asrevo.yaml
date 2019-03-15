@@ -463,6 +463,45 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: ui
+spec:
+  selector:
+    matchLabels:
+      run: ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ui
+    spec:
+      containers:
+      - name: ui
+        image: ashraf1abdelrasool/ui:1.0.0-SNAPSHOT
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+  labels:
+    run: ui
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+  selector:
+    run: ui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: gateway
 spec:
   selector:

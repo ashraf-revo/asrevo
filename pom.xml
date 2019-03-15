@@ -29,6 +29,7 @@
         <module>feedback</module>
         <module>ffmpeg</module>
         <module>core</module>
+        <module>ui</module>
     </modules>
     <dependencies>
         <dependency>
@@ -143,7 +144,9 @@
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
                                 <env>
-                                    <JAVA_APP_JAR>${project.artifactId}-${project.version}.${project.packaging}</JAVA_APP_JAR>
+                                    <JAVA_APP_JAR>
+                                        ${project.artifactId}-${project.version}.${project.packaging}
+                                    </JAVA_APP_JAR>
                                     <SPRING_PROFILES_ACTIVE>kubernetes</SPRING_PROFILES_ACTIVE>
                                 </env>
                             </build>
