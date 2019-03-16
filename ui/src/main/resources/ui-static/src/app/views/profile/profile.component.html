@@ -1,0 +1,81 @@
+<section class="hbox stretch" style="display: inline-table">
+  <aside class="aside-lg bg-light lter b-r">
+    <section class="vbox">
+      <section class="scrollable">
+        <div class="wrapper" *ngIf="user">
+          <div class="text-center m-b m-t">
+            <a class="thumb-lg" href="#activity" data-toggle="tab">
+              <img [src]="user.imageUrl" class="img-circle">
+            </a>
+            <div>
+              <div class="h3 m-t-xs m-b-xs">{{user.name}}</div>
+            </div>
+          </div>
+          <div class="panel wrapper">
+            <div class="row text-center">
+              <div class="col-xs-6"><a href="#followers" data-toggle="tab"> <span class="m-b-xs h4 block">{{user.userInfo.followers}}</span>
+                <small class="text-muted">Followers</small>
+              </a></div>
+              <div class="col-xs-6"><a href="#following" data-toggle="tab"> <span class="m-b-xs h4 block">{{user.userInfo.following}}</span>
+                <small class="text-muted">Following</small>
+              </a></div>
+            </div>
+          </div>
+
+          <div class="btn-group btn-group-justified m-b" *ngIf="authUser.user!=null&&authUser?.user?.id!=id">
+            <a class="btn btn-success btn-rounded" (click)="followOrUnFollow()">
+              <span class="text" [ngClass]="{'text-active': isFollow}">
+                <i class="fa fa-eye"></i> Follow
+              </span>
+              <span class="text" [ngClass]="{'text-active': !isFollow}">
+                <i class="fa fa-eye"></i> Following
+              </span>
+            </a>
+          </div>
+
+
+          <div>
+            <small class="text-uc text-xs text-muted">info</small>
+            <p>{{user.info}}</p>
+            <div class="line"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+  <aside class="bg-white">
+    <section class="vbox">
+      <header class="header bg-light lt">
+        <ul class="nav nav-tabs nav-white">
+          <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+          <li class=""><a href="#followers" data-toggle="tab">Followers</a></li>
+          <li class=""><a href="#following" data-toggle="tab">Following</a></li>
+        </ul>
+      </header>
+      <section class="scrollable">
+        <div class="tab-content">
+          <div class="tab-pane active" id="activity">
+            <ul style="overflow-y: scroll;height: 82vh" class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+              <as-video-row *ngFor="let m of master" [master]="m"></as-video-row>
+            </ul>
+          </div>
+          <!--<i class="fa fa-spinner fa fa-spin fa fa-large"></i>-->
+
+          <div class="tab-pane" id="followers">
+            <!--<div class="text-center wrapper">-->
+            <ul style="overflow-y: scroll;height: 82vh" class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+              <as-user-row *ngFor="let f of followers" [user]="f"></as-user-row>
+            </ul>
+            <!--</div>-->
+          </div>
+          <div class="tab-pane" id="following">
+            <!--<div class="text-center wrapper">-->
+            <ul style="overflow-y: scroll;height: 82vh" class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+              <as-user-row *ngFor="let f of following" [user]="f"></as-user-row>
+            </ul>            <!--</div>-->
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+</section>

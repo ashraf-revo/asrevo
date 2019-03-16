@@ -1,0 +1,22 @@
+<li class="list-group-item clearfix" *ngIf="userMediaView.m">
+  <a [routerLink]="['/video',userMediaView.m.id]" class="pull-left thumb-lg m-r">
+    <img [src]="userMediaView.m.image+'.png'">
+  </a>
+  <a class="clear" [routerLink]="['/video',userMediaView.m.id]">
+    <span class="block text-ellipsis">        <span class="text">{{userMediaView.m.title}}</span>
+</span>
+  </a>
+  <a class="clear" [routerLink]="['/profile',userMediaView.m.user.id]">
+    <small class="text-muted">{{userMediaView.m.user.name}}</small>
+  </a>
+  <span>
+    <small class="text-ellipsis text-xs text-muted">
+       <span class="text">{{userMediaView.m.meta}}</span>
+    </small>
+  </span>
+  <span>
+    <small class="text-ellipsis">
+      Last Seen {{userMediaView.lastViewDate | amTimeAgo}} : {{userMediaView.count}} views
+    </small>
+  </span>
+</li>

@@ -1,0 +1,23 @@
+<li class="list-group-item clearfix">
+  <a [routerLink]="['/video',master.id]" class="pull-left thumb-lg m-r">
+    <img [src]="master.image+'.png'">
+  </a>
+  <a class="clear" [routerLink]="['/video',master.id]">
+    <span class="block text-ellipsis">
+            <span class="text">{{master.title}}</span>
+    </span>
+  </a>
+  <a class="clear" [routerLink]="['/profile',master.user.id]">
+    <small class="text-muted">{{master.user.name}}</small>
+  </a>
+  <span>
+    <small class="text-ellipsis text-xs text-muted">
+      <span class="text">{{master.meta}}</span>
+    </small>
+  </span>
+  <span>
+    <small class="text-ellipsis">
+      {{master.createdDate | amTimeAgo}}
+    </small>
+  </span>
+</li>

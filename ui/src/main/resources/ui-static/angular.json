@@ -25,7 +25,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/clappr.js",
+              "src/assets/js/level-selector.js",
+              "src/assets/js/clappr-thumbnails-plugin.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

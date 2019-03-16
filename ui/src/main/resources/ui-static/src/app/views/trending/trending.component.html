@@ -1,0 +1,20 @@
+<section class="hbox stretch" style="display: inline-table">
+  <aside class="aside-lg bg-light lter b-r">
+    <section class="vbox">
+      <section class="scrollable">
+        <div class="wrapper">
+          <a class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+            <i class="icon-refresh i-lg inline" id="refresh"></i>
+          </a>
+          <h2 class="font-thin m-b">
+            <as-animate-bar></as-animate-bar>
+            Trending
+          </h2>
+          <div class="row row-sm">
+            <as-video-grid *ngFor="let m of master" [master]="m"></as-video-grid>
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+</section>

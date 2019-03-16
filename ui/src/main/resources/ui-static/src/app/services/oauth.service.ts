@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Token} from './token';
-import {State} from './state';
+import {Token} from '../domain/token';
+import {State} from '../domain/state';
 import {map} from 'rxjs/operators';
+import {User} from "../domain/user";
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class OauthService {
   private client_id: string = 'revox';
   private client_secret: string = 'revox';
   private provider: string = '/auth';
+  private helper = new JwtHelperService();
 
   constructor(private _httpClient: HttpClient) {
   }
@@ -19,7 +22,7 @@ export class OauthService {
   private getParams(): URLSearchParams {
     let params = new URLSearchParams();
     params.append('client_id', this.client_id);
-    params.append('redirect_uri', window.location.origin+"/");
+    params.append('redirect_uri', window.location.origin + "/");
     return params;
   }
 
@@ -39,6 +42,10 @@ export class OauthService {
     }));
   }
 
+  public decode(token: Token): User {
+    return this.helper.decodeToken(token.access_token)['user'];
+  }
+
   public static token() {
     return localStorage.getItem('access_token');
   }
@@ -51,8 +58,8 @@ export class OauthService {
     window.location.href = this.provider + '/oauth/authorize?' + params.toString();
   }
 
-  user(): Observable<Object> {
-    return this._httpClient.get(this.provider + '/user');
+  currentUser(): Observable<User> {
+    return this._httpClient.get<User>(this.provider + '/user').pipe(map(it => it['user']));
   }
 
   state(generate: boolean): State {

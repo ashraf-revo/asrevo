@@ -1,0 +1,37 @@
+<section class="vbox">
+  <header style=" position: fixed; width: 100%;top: 0px"
+          class="bg-white-only header header-md navbar navbar-fixed-top-xs">
+    <as-header [router]="_router" [activatedRoute]="_activatedRoute"></as-header>
+  </header>
+  <section style="margin-top: 60px;height: -webkit-calc(100% - 60px);">
+    <section class="hbox stretch" style="height: 100%">
+      <aside class="bg-black dk nav-xs aside hidden-print" style="height: 100%" id="nav">
+        <section class="vbox">
+          <as-nav></as-nav>
+        </section>
+      </aside>
+      <section id="content">
+        <section class="hbox stretch">
+          <section>
+            <router-outlet></router-outlet>
+          </section>
+          <aside class="col-md-3 b-l">
+            <section class="vbox">
+              <section class="scrollable padder-v">
+                <div class="panel" style="position: fixed;width: -webkit-calc(20% - 0px);">
+                  <h4 class="font-thin padder">
+                    Latest Videos
+                  </h4>
+                  <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border"
+                      style="overflow-y: auto;  height: 93%;">
+                    <as-video-row *ngFor="let m of master" [master]="m"></as-video-row>
+                  </ul>
+                </div>
+              </section>
+            </section>
+          </aside>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>

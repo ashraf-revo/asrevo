@@ -1,0 +1,21 @@
+<section class="hbox stretch" style="display: inline-table">
+  <aside class="aside-lg bg-light lter b-r">
+    <section class="vbox">
+      <section class="scrollable">
+        <div class="wrapper">
+          <a class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+            <i class="icon-refresh i-lg inline" id="refresh"></i>
+          </a>
+          <h2 class="font-thin m-b">
+            <as-animate-bar></as-animate-bar>
+            Subscriptions
+          </h2>
+          <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+            <as-video-row-search *ngFor="let m of master" [master]="m"></as-video-row-search>
+          </ul>
+        </div>
+        <button (click)="load()" [disabled]="!canLoad" class="btn btn-sm white rounded center-block">Show More</button>
+      </section>
+    </section>
+  </aside>
+</section>

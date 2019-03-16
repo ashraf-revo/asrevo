@@ -1,0 +1,24 @@
+<section class="panel panel-default">
+  <header class="panel-heading">Comments</header>
+  <section class="chat-list panel-body" style="overflow-y: scroll;height: 360px;">
+    <as-comment-row *ngFor="let umc of userMediaComments" [umc]="umc"></as-comment-row>
+  </section>
+  <footer class="panel-footer">
+    <article class="chat-item" id="chat-form"><a class="pull-left thumb-sm avatar">
+      <img
+        [src]="authUser.user!=null?(authUser.user.imageUrl):'/assets/images/a5.jpg'"
+        class="img-circle" alt="..."></a>
+      <section class="chat-body">
+        <form class="m-b-none">
+          <div class="input-group">
+            <input type="text" [disabled]="authUser.isAuth!='true'" [(ngModel)]="commentText" name="commentText"
+                   class="form-control" placeholder="Say something">
+            <span class="input-group-btn">
+              <button (click)="comment()" [disabled]="authUser.isAuth!='true'" class="btn btn-default" type="button">SEND</button>
+            </span>
+          </div>
+        </form>
+      </section>
+    </article>
+  </footer>
+</section>

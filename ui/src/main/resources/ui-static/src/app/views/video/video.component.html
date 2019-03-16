@@ -1,0 +1,61 @@
+<section class="hbox stretch" style="display: inline-table">
+  <aside class="aside-lg bg-light lter b-r">
+    <section class="vbox">
+      <section class="scrollable">
+        <div class="wrapper">
+          <a class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+            <i class="icon-refresh i-lg inline" id="refresh"></i>
+          </a>
+          <h2 class="font-thin m-b">
+            <as-animate-bar></as-animate-bar>
+            Video
+          </h2>
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="blog-post">
+                <div class="post-item">
+                  <div class="post-media" style="height: 340px;">
+                    <as-player [id]="id"></as-player>
+                  </div>
+                  <div *ngIf="m" class="caption wrapper-sm">
+                    <h3 class="post-title">
+                      <span class="text">{{m.title}}</span>
+                    </h3>
+                    <div class="post-sum">
+                      <span class="text-ellipsis padder-v">
+                        <span class="text">{{m.meta}}</span>
+                      </span>
+                    </div>
+                    <div class="text-muted">
+                      <i class="fa fa-user icon-muted">
+                      </i>
+                      by
+                      <a [routerLink]="['/profile',m.userId]" class="m-r-sm">{{m.user.name}}</a>
+                      <i class="fa fa-clock-o icon-muted"></i>
+                      {{m.createdDate | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}
+                      <a class="m-l-sm">
+                        <i class="fa fa-comment-o text-danger"></i> {{m.mediaInfo.commentsCount}}
+                      </a>
+                      <a class="m-l-sm btn btn-sm" style="padding: unset" [ngClass]="{'disabled':!authUser.isAuth}"
+                         (click)="likeOrUnLike()">
+                        <i class="fa  icon-like text-danger"></i> {{m.mediaInfo.likesCount}}
+                      </a>
+                      <a class="m-l-sm">
+                        <i class="fa icon-eye text-danger"></i> {{m.mediaInfo.viewsCount}}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div>
+                <as-comments-box [replaySubject]="replaySubject"></as-comments-box>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+</section>
