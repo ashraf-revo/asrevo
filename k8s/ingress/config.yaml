@@ -76,6 +76,8 @@ data:
       port: 9999
       servlet:
         context-path: /auth
+        session:
+          tracking-modes: cookie
       use-forward-headers: true
       tomcat:
         protocol-header: X-Forwarded-Proto
