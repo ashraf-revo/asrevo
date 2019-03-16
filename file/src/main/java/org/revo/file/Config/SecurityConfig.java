@@ -26,7 +26,7 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http.addFilterAt(AnonymousAuthenticationWebFilter.build(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .authorizeExchange()
-                .matchers(EndpointRequest.toAnyEndpoint()).permitAll()/*.hasRole("ACTUATOR")*/
+                .matchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR")
                 .anyExchange().authenticated()
                 .and()
                 .oauth2ResourceServer()

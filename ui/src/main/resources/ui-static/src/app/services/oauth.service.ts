@@ -62,6 +62,10 @@ export class OauthService {
     return this._httpClient.get<User>(this.provider + '/user').pipe(map(it => it['user']));
   }
 
+  logout() {
+    return localStorage.removeItem('access_token');
+  }
+
   state(generate: boolean): State {
     if (generate) localStorage.removeItem('state');
     let item = localStorage.getItem('state');
