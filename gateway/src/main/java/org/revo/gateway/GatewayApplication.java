@@ -74,7 +74,6 @@ public class GatewayApplication {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http
                 .authorizeExchange()
-                .pathMatchers("/auth/user").authenticated()
                 .anyExchange().permitAll()
                 .and().oauth2Login()
                 .and().logout()
