@@ -34,13 +34,13 @@
 </form>
 <div class="navbar-right ">
   <ul class="nav navbar-nav m-n hidden-xs nav-user user">
-<!--
-    <li class="hidden-xs" style="padding-top: 25px">
-      <as-notification></as-notification>
-    </li>
--->
+    <!--
+        <li class="hidden-xs" style="padding-top: 25px">
+          <as-notification></as-notification>
+        </li>
+    -->
     <li *ngIf="authUser.isAuth!='true'">
-      <a (click)="login()" href="/oauth2/authorization/login-client">
+      <a (click)="login()">
         Signin
       </a>
     </li>
