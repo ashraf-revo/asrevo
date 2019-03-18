@@ -29,7 +29,6 @@
         <module>feedback</module>
         <module>ffmpeg</module>
         <module>core</module>
-        <module>ui</module>
     </modules>
     <dependencies>
         <dependency>

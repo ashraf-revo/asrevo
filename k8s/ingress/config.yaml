@@ -50,7 +50,7 @@ data:
           services:
             gateway:
               name: gateway
-              url: http://35.193.181.79
+              url: http://35.239.97.9
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -246,17 +246,9 @@ data:
             locator:
               enabled: true
               filters:
-              - StripPrefix=1
               - PreserveHostHeader
-              include-expression: (!serviceId.equals("auth")&&!serviceId.equals("gateway")&&!serviceId.equals("kubernetes"))
-              url-expression: "'lb:http://'+serviceId"
-          routes:
-          - id: auth
-            uri: "lb:http://auth/auth"
-            predicates:
-            - Path=/auth/**
-            filters:
-            - PreserveHostHeader
+              include-expression: (!serviceId.equals("gateway")&&!serviceId.equals("kubernetes"))
+              url-expression: "'http://ingress-nginx.ingress-nginx/'+serviceId"
       security:
         oauth2:
           client:
