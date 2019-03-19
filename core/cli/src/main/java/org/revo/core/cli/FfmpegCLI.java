@@ -33,7 +33,7 @@ public class FfmpegCLI {
             String[] CmdChmod = {"chmod", "-R", "+xr", bin.getPath()};
             new ProcessBuilder(CmdChmod).start();
         } catch (IOException | ZipException ignored) {
-            log.info("org.revo.cli", ignored.getMessage());
+            log.info("org.revo.cli" + ignored.getMessage().toString());
         }
     }
 }
