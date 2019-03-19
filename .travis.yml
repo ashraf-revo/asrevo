@@ -10,4 +10,5 @@ script: ./mvnw clean install -DskipTests=true  \"$TRAVIS_COMMIT_MESSAGE\"   -Ddo
 cache:
   directories:
   - $HOME/.m2
+  - $HOME/.m2
 
