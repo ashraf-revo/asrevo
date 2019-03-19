@@ -139,17 +139,17 @@
                             <build>
                                 <from>java:8</from>
                                 <assembly>
-                                    <basedir>/deployments</basedir>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
-                                <env>
-                                    <JAVA_APP_JAR>
-                                        ${project.artifactId}-${project.version}.${project.packaging}
-                                    </JAVA_APP_JAR>
-                                    <SPRING_PROFILES_ACTIVE>kubernetes</SPRING_PROFILES_ACTIVE>
-                                </env>
-                            </build>
-                        </image>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-Djava.security.egd=file:/dev/./urandom</arg>
+                                        <arg>-jar</arg>
+                                        <arg>/maven/${project.build.finalName}.${project.packaging}</arg>
+                                    </exec>
+                                </entryPoint>
+                            </build>                        </image>
                     </images>
                     <resources>
                         <services>
