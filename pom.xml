@@ -137,7 +137,7 @@
                         <image>
                             <name>${docker.username}/${project.artifactId}:${project.version}</name>
                             <build>
-                                <from>fabric8/java-alpine-openjdk8-jdk</from>
+                                <from>java:8</from>
                                 <assembly>
                                     <basedir>/deployments</basedir>
                                     <descriptorRef>artifact</descriptorRef>
