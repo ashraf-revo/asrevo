@@ -9,4 +9,4 @@ services:
 script: ./mvnw clean install -DskipTests=true $TRAVIS_COMMIT_MESSAGE   -Ddocker.username=ashraf1abdelrasool -Ddocker.password=01120266849
 cache:
   directories:
-  - $HOME/.m2 
+  - $HOME/.m2
