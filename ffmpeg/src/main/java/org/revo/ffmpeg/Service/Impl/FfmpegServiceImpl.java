@@ -109,7 +109,7 @@ public class FfmpegServiceImpl implements FfmpegService {
 
     @Override
     public FFmpegProbeResult probe(Master master, String key) throws IOException {
-        return fFprobe.probe(signedUrlService.getUrl("video", getPath(master, key)));
+        return fFprobe.probe("\""+signedUrlService.getUrl("video", getPath(master, key))+"\"");
     }
 
     private String getPath(Master master, String key) {
