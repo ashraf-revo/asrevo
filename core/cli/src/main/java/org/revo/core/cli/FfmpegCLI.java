@@ -21,6 +21,9 @@ public class FfmpegCLI {
 
             String Ffmpeg = System.getProperty("user.home") + File.separator + "ffmpeg";
             String Ffprobe = System.getProperty("user.home") + File.separator + "ffprobe";
+            log.info("org.revo.cli"+System.getProperty("user.home"));
+            log.info("org.revo.cli"+Ffmpeg);
+            log.info("org.revo.cli"+Ffprobe);
             File path = new File(Ffmpeg);
             File bin = new File(Ffmpeg + "/bin/");
             FileUtils.deleteDirectory(path);
