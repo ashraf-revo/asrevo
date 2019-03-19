@@ -1,5 +1,6 @@
 package org.revo.core.cli;
 
+import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -12,10 +13,12 @@ import java.net.URL;
 /**
  * Created by ashraf on 14/04/17.
  */
+@Slf4j
 public class FfmpegCLI {
 
     public static void init() {
         try {
+
             String Ffmpeg = System.getProperty("user.home") + File.separator + "ffmpeg";
             String Ffprobe = System.getProperty("user.home") + File.separator + "ffprobe";
             File path = new File(Ffmpeg);
@@ -30,6 +33,7 @@ public class FfmpegCLI {
             String[] CmdChmod = {"chmod", "-R", "+xr", bin.getPath()};
             new ProcessBuilder(CmdChmod).start();
         } catch (IOException | ZipException ignored) {
+            log.info("org.revo.cli", ignored.getMessage());
         }
     }
 }
