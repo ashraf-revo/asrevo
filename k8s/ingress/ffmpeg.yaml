@@ -166,3 +166,17 @@ spec:
   type: NodePort
   selector:
     run: ffmpeg
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    run: ffmpeg
+  name: ffmpeg
+  namespace: asrevo
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: ffmpeg
