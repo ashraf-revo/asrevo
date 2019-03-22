@@ -19,10 +19,16 @@ public class Util {
     @Bean
     public FFmpegExecutor executor() {
         try {
-            init();
-            FFprobe ffprobe = new FFprobe(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffprobe");
-            FFmpeg ffmpeg = new FFmpeg(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffmpeg");
-            return new FFmpegExecutor(ffmpeg, ffprobe);
+            if (new File("/usr/bin/ffmpeg").exists()) {
+                FFprobe ffprobe = new FFprobe("/usr/bin/ffprobe");
+                FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");
+                return new FFmpegExecutor(ffmpeg, ffprobe);
+            } else {
+                init();
+                FFprobe ffprobe = new FFprobe(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffprobe");
+                FFmpeg ffmpeg = new FFmpeg(System.getProperty("user.home") + File.separator + "ffmpeg" + File.separator + "bin" + File.separator + "ffmpeg");
+                return new FFmpegExecutor(ffmpeg, ffprobe);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -14,6 +14,7 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <project.build.skip>false</project.build.skip>
+        <asrevo.cmds>apk add ffmpeg</asrevo.cmds>
     </properties>
     <dependencies>
         <dependency>

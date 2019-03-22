@@ -20,6 +20,7 @@
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <docker.username>ashraf1abdelrasool</docker.username>
         <project.build.skip>true</project.build.skip>
+        <asrevo.cmds></asrevo.cmds>
     </properties>
     <modules>
         <module>auth</module>
@@ -137,19 +138,22 @@
                         <image>
                             <name>${docker.username}/${project.artifactId}:${project.version}</name>
                             <build>
-                                <from>java:8</from>
+                                <from>fabric8/java-alpine-openjdk8-jdk</from>
                                 <assembly>
+                                    <basedir>/deployments</basedir>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
-                                <entryPoint>
-                                    <exec>
-                                        <arg>java</arg>
-                                        <arg>-Djava.security.egd=file:/dev/./urandom</arg>
-                                        <arg>-jar</arg>
-                                        <arg>/maven/${project.build.finalName}.${project.packaging}</arg>
-                                    </exec>
-                                </entryPoint>
-                            </build>                        </image>
+                                <runCmds>
+                                    ${asrevo.cmds}
+                                </runCmds>
+                                <env>
+                                    <JAVA_APP_JAR>
+                                        ${project.artifactId}-${project.version}.${project.packaging}
+                                    </JAVA_APP_JAR>
+                                    <SPRING_PROFILES_ACTIVE>kubernetes</SPRING_PROFILES_ACTIVE>
+                                </env>
+                            </build>
+                        </image>
                     </images>
                     <resources>
                         <services>
