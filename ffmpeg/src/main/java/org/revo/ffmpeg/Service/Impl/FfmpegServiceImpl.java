@@ -80,8 +80,7 @@ public class FfmpegServiceImpl implements FfmpegService {
 
     @Override
     public Master image(Master master) throws IOException {
-        FFmpegProbeResult probe = probe(master, get(master.getId(), master.getSplits().get((master.getSplits().size() / 2))).toString());
-        for (Path png : ffmpegUtils.image(probe, master.getId(), "png")) {
+        for (Path png : ffmpegUtils.image(probe(master, get(master.getId(), master.getSplits().get((master.getSplits().size() / 2))).toString()), master.getId(), "png")) {
             File file = png.toFile();
             storageService.push("thumb", getPath(master, master.getId() + ".png"), file);
         }
@@ -91,7 +90,7 @@ public class FfmpegServiceImpl implements FfmpegService {
             storageService.pushImageDelete(master.getId() + "/" + jpeg.getFileName().toString(), file);
         }
 */
-        for (Path png : ffmpegUtils.image(probe, master.getId(), "webp")) {
+        for (Path png : ffmpegUtils.image(probe(master, get(master.getId(), master.getSplits().get((master.getSplits().size() / 2))).toString()), master.getId(), "webp")) {
             File file = png.toFile();
             storageService.push("thumb", getPath(master, master.getId() + ".webp"), file);
         }
