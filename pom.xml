@@ -20,6 +20,7 @@
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <docker.username>ashraf1abdelrasool</docker.username>
         <project.build.skip>true</project.build.skip>
+        <asrevo.image>fabric8/java-alpine-openjdk8-jdk</asrevo.image>
         <asrevo.cmds></asrevo.cmds>
     </properties>
     <modules>
@@ -131,14 +132,14 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.5.42</version>
+                <version>4.0.0</version>
                 <configuration>
                     <skip>${project.build.skip}</skip>
                     <images>
                         <image>
                             <name>${docker.username}/${project.artifactId}:${project.version}</name>
                             <build>
-                                <from>fabric8/java-alpine-openjdk8-jdk</from>
+                                <from>${asrevo.image}</from>
                                 <assembly>
                                     <basedir>/deployments</basedir>
                                     <descriptorRef>artifact</descriptorRef>
@@ -152,6 +153,15 @@
                                     </JAVA_APP_JAR>
                                     <SPRING_PROFILES_ACTIVE>kubernetes</SPRING_PROFILES_ACTIVE>
                                 </env>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>
+                                            /deployments/${project.artifactId}-${project.version}.${project.packaging}
+                                        </arg>
+                                    </exec>
+                                </entryPoint>
                             </build>
                         </image>
                     </images>
