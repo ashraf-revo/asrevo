@@ -14,8 +14,7 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <project.build.skip>false</project.build.skip>
-        <asrevo.image>openjdk:8</asrevo.image>
-        <asrevo.cmds>apt-get update;apt-get upgrade; apt-get install ffmpeg</asrevo.cmds>
+        <asrevo.cmds>apk add ffmpeg</asrevo.cmds>
     </properties>
     <dependencies>
         <dependency>

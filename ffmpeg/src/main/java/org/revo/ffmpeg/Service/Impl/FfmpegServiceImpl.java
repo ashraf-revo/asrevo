@@ -90,10 +90,12 @@ public class FfmpegServiceImpl implements FfmpegService {
             storageService.pushImageDelete(master.getId() + "/" + jpeg.getFileName().toString(), file);
         }
 */
+/*
         for (Path png : ffmpegUtils.image(probe(master, get(master.getId(), master.getSplits().get((master.getSplits().size() / 2))).toString()), master.getId(), "webp")) {
             File file = png.toFile();
             storageService.push("thumb", getPath(master, master.getId() + ".webp"), file);
         }
+*/
         master.setImage(signedUrlService.getUrl("thumb", getPath(master, master.getId())));
         return master;
     }
