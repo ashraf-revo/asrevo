@@ -59,15 +59,15 @@ public class GatewayApplication {
                 .map(OAuth2AuthorizedClient::getAccessToken)
                 .map(token -> exchange.mutate().request(r -> r.headers(headers -> headers.setBearerAuth(token.getTokenValue()))).build())
                 .defaultIfEmpty(exchange)
-                .flatMap(chain::filter);
-//                .then(Mono.fromRunnable(() -> {
-//                    String name = "Set-Cookie";
-//                    String value = exchange.getResponse().getHeaders().getFirst(name);
-//                    if (!new PathPatternParser().parse("/auth/**").matches(exchange.getRequest().getPath().pathWithinApplication()) && value != null) {
-//                        exchange.getResponse().getHeaders().set(name, value.replaceAll("JSESSIONID=[0-9a-zA-Z]+; ", ""));
-//                        if (value.contains("SESSION=;")) exchange.getResponse().getHeaders().remove(name);
-//                    }
-//                }));
+                .flatMap(chain::filter)
+                .then(Mono.fromRunnable(() -> {
+                    String name = "Set-Cookie";
+                    String value = exchange.getResponse().getHeaders().getFirst(name);
+                    if (!new PathPatternParser().parse("/auth/**").matches(exchange.getRequest().getPath().pathWithinApplication()) && value != null) {
+                        exchange.getResponse().getHeaders().set(name, value.replaceAll("JSESSIONID=[0-9a-zA-Z]+; ", ""));
+                        if (value.contains("SESSION=;")) exchange.getResponse().getHeaders().remove(name);
+                    }
+                }));
     }
 
     @Bean
