@@ -4,7 +4,6 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 import org.apache.tomcat.util.buf.MessageBytes;
-import org.bson.types.ObjectId;
 import org.revo.auth.Service.BaseClientService;
 import org.revo.auth.Service.UserService;
 import org.revo.core.base.Config.Env;
@@ -75,15 +74,8 @@ public class Util {
     @Bean
     CommandLineRunner runner(Env env, UserService userService, BaseClientService baseClientService) {
         return strings -> {
-            if (userService.count() == 0) {
-                env.getUsers().forEach(user -> {
-                    user.setId(new ObjectId(user.getId()).toString());
-                    userService.save(user);
-                });
-            }
-            if (baseClientService.count() == 0) {
-                env.getBaseClients().forEach(baseClientService::save);
-            }
+            env.getUsers().forEach(userService::save);
+            env.getBaseClients().forEach(baseClientService::save);
         };
     }
 
