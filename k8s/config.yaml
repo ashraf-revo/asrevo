@@ -88,9 +88,9 @@ data:
       revo:
         env:
           users:
-          - email: ashraf1abdelrasool@gmail.com
+          - id: 5bfd3df1ad8ce6617f9bf635
+            email: ashraf1abdelrasool@gmail.com
             enable: true
-            id: 5bfd3df1ad8ce6617f9bf635
             imageUrl: /assets/images/a5.jpg
             info: this is sample info about me you are welcome
             locked: true
@@ -99,12 +99,13 @@ data:
             phone: 1120266849
             type: 111
           baseClients:
-          - name: revo
+          - id: 5cd7294e9aad58282629eead
+            name: revo
             clientId: revo
             userId: 5bfd3df1ad8ce6617f9bf635
             clientSecret: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
             authorizedGrantTypes: "authorization_code"
-            registeredRedirectUris: "https://asrevo.me"
+            registeredRedirectUris: ${org.revo.env.services.gateway.url}
             scope:
             - "read"
             - "write"

@@ -43,7 +43,7 @@ org:
         userId: 5bfd3df1ad8ce6617f9bf635
         clientSecret: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
         authorizedGrantTypes: "authorization_code"
-        registeredRedirectUris: ${org.revo.env.services.gateway.url}
+        registeredRedirectUris: ${org.revo.env.services.gateway.url}/login/oauth2/code/login-client
         scope:
         - "read"
         - "write"

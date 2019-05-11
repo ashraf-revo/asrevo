@@ -28,7 +28,6 @@ public class BaseClientServiceImpl implements BaseClientService {
     @Override
     public void save(BaseClient baseClient) {
         if (userService.current() != null) baseClient.setUserId(userService.current());
-        baseClient.setClientSecret(encoder.encode(baseClient.getClientSecret()));
         baseClientRepository.save(baseClient);
     }
 

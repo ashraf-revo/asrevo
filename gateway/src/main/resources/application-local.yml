@@ -27,8 +27,8 @@ spring:
         registration:
           login-client:
             provider: auth
-            client-id: revo1
-            client-secret: revo1
+            client-id: revo
+            client-secret: revo
             authorization-grant-type: authorization_code
             redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: read
