@@ -6,7 +6,7 @@ import {AuthService} from './auth.service';
 export class DefaultService {
   public url = '';
   private _lastRoute: NavigationEnd = null;
-  private protectedUrl: string[] = ['settings', 'upload', 'subscriptions', 'history'];
+  private protectedUrl: string[] = ['settings', 'upload'];
 
   constructor() {
   }

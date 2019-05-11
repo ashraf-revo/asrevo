@@ -12,6 +12,7 @@ import java.util.List;
 public class Master extends Base {
     private String image;
     private String secret;
+    private String iv;
     private String ext;
     private String file;
     private List<IndexImpl> impls;

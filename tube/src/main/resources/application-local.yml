@@ -9,32 +9,12 @@ spring:
   cloud:
     stream:
       bindings:
-        tube_hls:
-          destination: tube.hls
+        asrevo_new_video:
+          destination: asrevo.new.video
           group: s1
           contentType: application/json
-        tube_info:
-          destination: tube.info
-          group: s1
-          contentType: application/json
-        tube_store:
-          destination: tube.store
-          group: s1
-          contentType: application/json
-        ffmpeg_queue:
-          destination: ffmpeg.queue
-          group: s1
-          contentType: application/json
-        feedback_index:
-          destination: feedback.index
-          group: s1
-          contentType: application/json
-        file_queue:
-          destination: file.queue
-          group: s1
-          contentType: application/json
-        torrent_queue:
-          destination: torrent.queue
+        asrevo_hls_impl:
+          destination: asrevo.hls.impl
           group: s1
           contentType: application/json
 server:

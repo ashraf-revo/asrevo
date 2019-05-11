@@ -22,4 +22,9 @@ public class FileServiceImpl implements FileService {
             return fileRepository.save(file);
         });
     }
+
+    @Override
+    public Mono<File> findOne(String id) {
+        return fileRepository.findById(id);
+    }
 }

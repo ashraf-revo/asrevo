@@ -18,11 +18,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*
-        this.subscription = interval(3000).pipe(flatMap(it => this._feedbackService.states())).subscribe(it => this.zone.run(() => {
-        }));
-    */
-
   }
 
   ngOnDestroy() {

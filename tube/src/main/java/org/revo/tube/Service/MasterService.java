@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 public interface MasterService {
     Mono<Master> saveInfo(Master master);
 
-    Mono<Master> append(Mono<Index> index);
+    Mono<Master> append(Index index);
 
     Mono<Master> save(Master master);
 
@@ -19,4 +19,6 @@ public interface MasterService {
     Mono<String> getStream(String master);
 
     Flux<Master> findAll(Status status, int size, String id, Ids userIds, Ids masterIds);
+
+//    Mono<Master> publish(Index index);
 }

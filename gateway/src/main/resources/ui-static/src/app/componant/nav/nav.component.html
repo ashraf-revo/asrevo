@@ -14,30 +14,6 @@
               </span>
           </a>
         </li>
-        <li>
-          <a [routerLink]="['/trending']">
-            <i class="icon-fire icon text-info"></i>
-            <span class="font-bold">
-                                                Trending
-                                            </span>
-          </a>
-        </li>
-        <li *ngIf="authUser.isAuth=='true'">
-          <a [routerLink]="['/subscriptions']">
-            <i class="icon-list icon text-info"></i>
-            <span class="font-bold">
-                                                Subscriptions
-                                            </span>
-          </a>
-        </li>
-        <li *ngIf="authUser.isAuth=='true'">
-          <a [routerLink]="['/history']">
-            <i class="icon-notebook icon text-info"></i>
-            <span class="font-bold">
-                                                History
-                                            </span>
-          </a>
-        </li>
         <li *ngIf="authUser.isAuth=='true'">
           <a [routerLink]="['/upload']">
             <i class="icon-cloud-upload icon text-info"></i>

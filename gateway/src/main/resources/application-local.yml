@@ -12,20 +12,10 @@ spring:
         - Path=/auth/**
       - id: tube
         uri: ${org.revo.env.services.tube.url}
+        filters:
+        - StripPrefix=1
         predicates:
         - Path=/tube/**
-      - id: file
-        uri: ${org.revo.env.services.file.url}
-        predicates:
-        - Path=/file/**
-      - id: feedback
-        uri: ${org.revo.env.services.feedback.url}
-        predicates:
-        - Path=/feedback/**
-      - id: ffmpeg
-        uri: ${org.revo.env.services.ffmpeg.url}
-        predicates:
-        - Path=/ffmpeg/**
 #      discovery:
 #        locator:
 #          enabled: true

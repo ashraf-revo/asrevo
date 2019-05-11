@@ -5,4 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface FileService {
     Mono<File> save(File file);
+
+    Mono<File> findOne(String id);
+
 }

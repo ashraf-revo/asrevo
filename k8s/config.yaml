@@ -6,17 +6,16 @@ metadata:
 data:
   default.yaml: |-
     spring:
-      profiles: default
       security:
         oauth2:
           resourceserver:
             jwt:
-              jwk-set-uri: ${org.revo.env.services.auth.url}/.well-known/jwks.json
+              jwk-set-uri: ${org.revo.env.services.gateway.url}/auth/.well-known/jwks.json
       rabbitmq:
-        username: zhowcpsz
-        password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
-        host: mosquito.rmq.cloudamqp.com
-        virtual-host: zhowcpsz
+        username: nwxkdlml
+        password: cd9LnYXkcVzbzrBSYCDixZD3howw_k-O
+        host: rhino.rmq.cloudamqp.com
+        virtual-host: nwxkdlml
     management:
       endpoints:
         web:
@@ -49,49 +48,9 @@ data:
               domain-name: ''
               name: asrevo-thumb
           services:
-            auth:
-              name: auth
-              url: http://localhost:9999/auth
-            tube:
-              name: tube
-              url: http://localhost:8081
-            file:
-              name: file
-              url: http://localhost:8082
-            feedback:
-              name: feedback
-              url: http://localhost:8083
-            ffmpeg:
-              name: ffmpeg
-              url: http://localhost:8084
             gateway:
               name: gateway
-              url: http://localhost:8080
-    ---
-    spring:
-      profiles: kubernetes
-    org:
-      revo:
-        env:
-          services:
-            auth:
-              name: auth
-              url: http://auth-responsible-oribi.cfapps.io/auth
-            tube:
-              name: tube
-              url: ${TUBE_SERVICE_HOST}:${TUBE_SERVICE_PORT}
-            file:
-              name: file
-              url: ${FILE_SERVICE_HOST}:${FILE_SERVICE_PORT}
-            feedback:
-              name: feedback
-              url: ${FEEDBACK_SERVICE_HOST}:${FEEDBACK_SERVICE_PORT}
-            ffmpeg:
-              name: ffmpeg
-              url: ${FFMPEG_SERVICE_HOST}:${FFMPEG_SERVICE_PORT}
-            gateway:
-              name: gateway
-              url: ${GATEWAY_SERVICE_HOST}:${GATEWAY_SERVICE_PORT}
+              url: http://35.239.97.9
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -117,6 +76,8 @@ data:
       port: 9999
       servlet:
         context-path: /auth
+        session:
+          tracking-modes: cookie
       use-forward-headers: true
       tomcat:
         protocol-header: X-Forwarded-Proto
@@ -137,6 +98,17 @@ data:
             password: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
             phone: 1120266849
             type: 111
+          baseClients:
+          - name: revo
+            clientId: revo
+            userId: 5bfd3df1ad8ce6617f9bf635
+            clientSecret: "{bcrypt}$2a$10$rPUJCZ6TmrrmDmHuIJptm.UIxsUcGm/WegmuwNfXE4eibF/kOEwWu"
+            authorizedGrantTypes: "authorization_code"
+            registeredRedirectUris: "https://asrevo.me"
+            scope:
+            - "read"
+            - "write"
+            autoApproveScopes: "read"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -155,135 +127,16 @@ data:
       cloud:
         stream:
           bindings:
-            tube_hls:
-              destination: tube.hls
+            asrevo_new_video:
+              destination: asrevo.new.video
               group: s1
               contentType: application/json
-            tube_info:
-              destination: tube.info
-              group: s1
-              contentType: application/json
-            tube_store:
-              destination: tube.store
-              group: s1
-              contentType: application/json
-            ffmpeg_queue:
-              destination: ffmpeg.queue
-              group: s1
-              contentType: application/json
-            feedback_index:
-              destination: feedback.index
-              group: s1
-              contentType: application/json
-            file_queue:
-              destination: file.queue
-              group: s1
-              contentType: application/json
-            torrent_queue:
-              destination: torrent.queue
+            asrevo_hls_impl:
+              destination: asrevo.hls.impl
               group: s1
               contentType: application/json
     server:
       port: 8081
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: file
-data:
-  file.yaml: |-
-    spring:
-      cloud:
-        stream:
-          bindings:
-            tube_store:
-              destination: tube.store
-              group: s1
-              contentType: application/json
-            file_queue:
-              destination: file.queue
-              group: s1
-              contentType: application/json
-    server:
-      port: 8082
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: feedback
-data:
-  feedback.yaml: |-
-    serverUri: https://gopivotal:a4423e3744cd633de4368031b3f1ab13@thorin-us-east-1.searchly.com
-    spring:
-      data:
-        mongodb:
-          database: CloudFoundry_jotgo8n0_2po2998g
-          port: 63683
-          password: o61-8UaDOFO74rb5HMf76uR_bqaIwHlC
-          username: CloudFoundry_jotgo8n0_2po2998g_s3f7fpkr
-          host: ds163683.mlab.com
-      redis:
-        host: redis-18285.c93.us-east-1-3.ec2.cloud.redislabs.com
-        password: w9cylfo4j28B4zKK6qWjZcgD2crUxdAd
-        port: 18285
-      cloud:
-        stream:
-          bindings:
-            feedback_index:
-              destination: feedback.index
-              group: s1
-    server:
-      port: 8083
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ffmpeg
-data:
-  ffmpeg.yaml: |-
-    spring:
-      cloud:
-        stream:
-          bindings:
-            ffmpeg_queue:
-              destination: ffmpeg.queue
-              group: s1
-              contentType: application/json
-            ffmpeg_converter_pop:
-              destination: ffmpeg.converter
-              group: s1
-              contentType: application/json
-            ffmpeg_converter_push:
-              destination: ffmpeg.converter
-              group: s1
-              contentType: application/json
-            ffmpeg_hls_push:
-              destination: ffmpeg.hls
-              group: s1
-              contentType: application/json
-            tube_info:
-              destination: tube.info
-              group: s1
-              contentType: application/json
-            ffmpeg_hls_pop:
-              destination: ffmpeg.hls
-              group: s1
-              contentType: application/json
-            tube_hls:
-              destination: tube.hls
-              group: s1
-              contentType: application/json
-          rabbit:
-            bindings:
-              ffmpeg_converter_pop:
-                consumer:
-                  max-priority: 20
-                  concurrency: 1
-                  maxConcurrency: 1
-                  maxAttempts: 0
-    logo: asrevo
-    server:
-      port: 8084
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -298,15 +151,13 @@ data:
         port: 11283
       cloud:
         gateway:
-          routes:
-          - id: auth
-            uri: ${org.revo.env.services.auth.url}
-            predicates:
-            - Path=/auth/**
-            discovery:
-              locator:
-                enabled: true
-                url-expression: "'lb:http://'+serviceId"
+          discovery:
+            locator:
+              enabled: true
+              filters:
+              - PreserveHostHeader
+              include-expression: (!serviceId.equals("gateway")&&!serviceId.equals("kubernetes"))
+              url-expression: "'http://ingress-nginx.ingress-nginx/'+serviceId"
       security:
         oauth2:
           client:

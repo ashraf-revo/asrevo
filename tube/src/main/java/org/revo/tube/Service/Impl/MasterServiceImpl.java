@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static org.revo.tube.Util.Util.generateKey;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -48,14 +47,14 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public Mono<Master> append(Mono<Index> index) {
-        return index.flatMap(itv -> findOne(itv.getMaster())
-                .flatMap(it -> {
-                    List<IndexImpl> indexList = it.getImpls().stream().filter(i -> i.getIndex() != null && !i.getIndex().equals(itv.getId())).collect(toList());
-                    indexList.add(new IndexImpl(itv.getId(), itv.getResolution(), Status.SUCCESS, itv.getExecution()));
-                    it.setImpls(indexList);
-                    return masterRepository.save(it);
-                }));
+    public Mono<Master> append(Index index) {
+        return findOne(index.getMaster()).flatMap(it -> {
+            List<IndexImpl> indexList = it.getImpls().stream().filter(i -> i.getIndex() != null && !i.getIndex().equals(index.getId())).collect(toList());
+            indexList.add(new IndexImpl(index.getId(), index.getResolution(), Status.SUCCESS, index.getExecution()));
+            it.setImpls(indexList);
+            return masterRepository.save(it);
+        });
+
     }
 
     private static String getParsedTag(Index index) {
@@ -76,7 +75,6 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public Mono<Master> save(Master master) {
-        master.setSecret(generateKey());
         return masterRepository.save(master);
     }
 
@@ -106,15 +104,26 @@ public class MasterServiceImpl implements MasterService {
                         .first("meta").as("meta")
                         .first("userId").as("userId")
                         .first("createdDate").as("createdDate")
+                        .first("ext").as("ext")
                         .first("image").as("image")
-//                        .first("stream").as("stream")
-//                        .first("secret").as("secret")
                         .first("file").as("file")
                         .first("time").as("time")
                         .first("resolution").as("resolution")
+//                        .first("stream").as("stream")
+//                        .first("secret").as("secret")
+//                        .first("iv").as("iv")
                 , sort(DESC, "id")
                 , limit(size));
 
         return reactiveMongoOperations.aggregate(agg, Master.class);
     }
+
+/*
+    @Override
+    public Mono<Master> publish(Index index) {
+        return findOne(index.getMaster())
+                .filter(itm -> index.getTags().stream().map(it -> it.getURI().split("_")[1]).distinct().count() == itm.getSplits().size())
+                .flatMap(it -> append(Mono.just(index)));
+    }
+*/
 }

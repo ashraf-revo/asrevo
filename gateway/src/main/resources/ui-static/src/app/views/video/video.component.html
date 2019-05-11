@@ -30,27 +30,12 @@
                       <i class="fa fa-user icon-muted">
                       </i>
                       by
-                      <a [routerLink]="['/profile',m.userId]" class="m-r-sm">{{m.user.name}}</a>
+                      <a [routerLink]="['/profile',m.userId]" *ngIf="m.user!=null" class="m-r-sm">{{m.user.name}}</a>
                       <i class="fa fa-clock-o icon-muted"></i>
                       {{m.createdDate | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}
-                      <a class="m-l-sm">
-                        <i class="fa fa-comment-o text-danger"></i> {{m.mediaInfo.commentsCount}}
-                      </a>
-                      <a class="m-l-sm btn btn-sm" style="padding: unset" [ngClass]="{'disabled':!authUser.isAuth}"
-                         (click)="likeOrUnLike()">
-                        <i class="fa  icon-like text-danger"></i> {{m.mediaInfo.likesCount}}
-                      </a>
-                      <a class="m-l-sm">
-                        <i class="fa icon-eye text-danger"></i> {{m.mediaInfo.viewsCount}}
-                      </a>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-sm-5">
-              <div>
-                <as-comments-box [replaySubject]="replaySubject"></as-comments-box>
               </div>
             </div>
           </div>

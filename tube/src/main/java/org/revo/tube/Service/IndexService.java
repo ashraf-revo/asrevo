@@ -12,4 +12,6 @@ public interface IndexService {
     Mono<Index> findOne(String id);
 
     Flux<Index> findByMaster(String master);
+
+    Mono<Index> saveOrAppend(Index index);
 }

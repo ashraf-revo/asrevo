@@ -26,4 +26,23 @@ public class Util {
         }
         return builder.toString();
     }
+
+    public static String convertStringToHex(String str) {
+        StringBuilder hex = new StringBuilder("0x");
+        for (char c : str.toCharArray()) {
+            hex.append(Integer.toHexString((int) c));
+        }
+        return hex.toString();
+    }
+
+    public static int comp(UnparsedTag s1, UnparsedTag s2) {
+        String[] s1_ = s1.getURI().replace(".ts", "").split("_");
+        String[] s2_ = s2.getURI().replace(".ts", "").split("_");
+        if (s1_[0].compareTo(s2_[0]) != 0) return s1_[0].compareTo(s2_[0]);
+        for (int i = 1; i < s1_.length; i++) {
+            if (Integer.valueOf(s1_[i]).compareTo(Integer.valueOf(s2_[i])) != 0)
+                return Integer.valueOf(s1_[i]).compareTo(Integer.valueOf(s2_[i]));
+        }
+        return 0;
+    }
 }

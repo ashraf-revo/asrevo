@@ -27,9 +27,6 @@
         <module>auth</module>
         <module>gateway</module>
         <module>tube</module>
-        <module>file</module>
-        <module>feedback</module>
-        <module>ffmpeg</module>
         <module>core</module>
     </modules>
     <dependencies>

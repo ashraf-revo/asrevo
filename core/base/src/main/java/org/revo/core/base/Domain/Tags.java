@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Resolution {
-    private int width;
-    private int height;
-    private String id;
+public class Tags {
+    private String index;
+    private String master;
 }

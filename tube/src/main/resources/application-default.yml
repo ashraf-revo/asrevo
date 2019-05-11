@@ -6,10 +6,10 @@ spring:
         jwt:
           jwk-set-uri: ${org.revo.env.services.auth.url}/.well-known/jwks.json
   rabbitmq:
-    username: zhowcpsz
-    password: YU5WOYbSz901SccQxg6MrrxOSeYLSuSA
-    host: mosquito.rmq.cloudamqp.com
-    virtual-host: zhowcpsz
+    username: nwxkdlml
+    password: cd9LnYXkcVzbzrBSYCDixZD3howw_k-O
+    host: rhino.rmq.cloudamqp.com
+    virtual-host: nwxkdlml
 management:
   endpoints:
     web:

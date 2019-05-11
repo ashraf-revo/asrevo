@@ -1,46 +1,16 @@
 package org.revo.tube.Config;
 
 import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
 public interface Processor {
-    String tube_hls = "tube_hls";
+    String asrevo_hls_impl = "asrevo_hls_impl";
 
-    @Input("tube_hls")
-    SubscribableChannel tube_hls();
+    @Input("asrevo_hls_impl")
+    SubscribableChannel asrevo_hls_impl();
 
-    String tube_info = "tube_info";
+    String asrevo_new_video = "asrevo_new_video";
 
-    @Input("tube_info")
-    SubscribableChannel tube_info();
-
-    String tube_store = "tube_store";
-
-    @Input("tube_store")
-    SubscribableChannel tube_store();
-
-
-    String feedback_index = "feedback_index";
-
-    @Output("feedback_index")
-    MessageChannel feedback_index();
-
-
-    String ffmpeg_queue = "ffmpeg_queue";
-
-    @Output("ffmpeg_queue")
-    MessageChannel ffmpeg_queue();
-
-
-    String file_queue = "file_queue";
-
-    @Output("file_queue")
-    MessageChannel file_queue();
-
-    String torrent_queue = "torrent_queue";
-
-    @Output("torrent_queue")
-    MessageChannel torrent_queue();
+    @Input("asrevo_new_video")
+    SubscribableChannel asrevo_new_video();
 }

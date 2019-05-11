@@ -23,8 +23,7 @@
       <a *ngIf="master.user" [routerLink]="['/profile',master.userId]" class="text-ellipsis text-xs text-muted">
         {{master.user.name}}
       </a>
-      <span *ngIf="master.mediaInfo" class="text-ellipsis">
-      {{master.mediaInfo.viewsCount}} Views .
+      <span class="text-ellipsis">
       {{master.createdDate | amTimeAgo}}
       </span>
     </div>

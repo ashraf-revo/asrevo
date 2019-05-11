@@ -1,5 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {TubeService} from "../../services/tube.service";
+import {AfterViewInit, Component, Input, OnDestroy} from '@angular/core';
 
 declare var Clappr: any;
 declare var LevelSelector: any;
@@ -10,15 +9,15 @@ declare var ClapprThumbnailsPlugin: any;
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit, OnDestroy {
+export class PlayerComponent implements AfterViewInit, OnDestroy {
   @Input()
   id: string;
   private player: any = null;
 
-  constructor(private _tubeService: TubeService) {
+  constructor() {
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.player = new Clappr.Player({
       source: "/tube/api/master/" + this.id + ".m3u8", parentId: "#player",
       plugins: [Clappr.FlasHLS, LevelSelector, ClapprThumbnailsPlugin],
@@ -37,21 +36,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
         thumbs: []
       }
     });
-
-    /*
-        this._tubeService.findOne(this.id)
-          .subscribe(it => {
-            var thumbnailsPlugin = player.getPlugin("scrub-thumbnails");
-            for (var i = 0; i < Math.floor(it.time / 2); i++) {
-              thumbnailsPlugin.addThumbnail({
-                url: it.image + "/" + this.id + "_" + (i + 1) + ".jpeg",
-                time: 1 + (i * 2)
-              }).then(function () {
-                console.log("Thumbnail added.");
-              })
-            }
-          })
-    */
   }
 
   ngOnDestroy() {
