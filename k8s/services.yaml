@@ -106,6 +106,7 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 8080
-  type: NodePort
+  type: LoadBalancer
+  loadBalancerIP: 35.238.48.181
   selector:
     run: gateway
