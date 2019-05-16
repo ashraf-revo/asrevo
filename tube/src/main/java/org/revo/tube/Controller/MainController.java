@@ -1,7 +1,6 @@
 package org.revo.tube.Controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.revo.core.base.Domain.*;
 import org.revo.tube.Service.FileService;
 import org.revo.tube.Service.Impl.Remote;
@@ -9,13 +8,13 @@ import org.revo.tube.Service.IndexService;
 import org.revo.tube.Service.MasterService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -43,15 +42,15 @@ public class MainController {
                 .andRoute(GET("/api/master" + masterURL), serverRequest -> ok()
                         .header("Content-Type", "application/x-mpegURL")
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + serverRequest.pathVariable("master") + ".m3u8")
-                        .body(masterService.getStream(serverRequest.pathVariable("master")).map(its -> IOUtils.toInputStream(its, Charset.defaultCharset())).map(InputStreamResource::new), InputStreamResource.class))
+                        .body(masterService.getStream(serverRequest.pathVariable("master")).map(it -> new DefaultDataBufferFactory().wrap(it.getBytes())), DataBuffer.class))
                 .andRoute(GET("/api/master" + indexUrl), serverRequest -> ok()
                         .header("Content-Type", "application/x-mpegURL")
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + serverRequest.pathVariable("master") + ".m3u8")
-                        .body(indexService.findOneParsed(serverRequest.pathVariable("master"), serverRequest.pathVariable("index")).map(its -> IOUtils.toInputStream(its, Charset.defaultCharset())).map(InputStreamResource::new), InputStreamResource.class))
+                        .body(indexService.findOneParsed(serverRequest.pathVariable("master"), serverRequest.pathVariable("index")).map(it -> new DefaultDataBufferFactory().wrap(it.getBytes())), DataBuffer.class))
                 .andRoute(GET("/api/master" + keyUrl), serverRequest -> ok()
                         .header("Content-Type", "application/pgp-keys")
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + serverRequest.pathVariable("key") + ".key")
-                        .body(masterService.findOne(serverRequest.pathVariable("key")).map(Master::getSecret).map(its -> IOUtils.toInputStream(its, Charset.defaultCharset())).map(InputStreamResource::new), InputStreamResource.class))
+                        .body(masterService.findOne(serverRequest.pathVariable("key")).map(Master::getSecret).map(it -> new DefaultDataBufferFactory().wrap(it.getBytes())), DataBuffer.class))
                 .andRoute(GET("/api/master/{size}/{id}"), serverRequest -> ok().body(masterService.findAll(Status.SUCCESS, parseInt(serverRequest.pathVariable("size")), serverRequest.pathVariable("id").equals("0") ? null : serverRequest.pathVariable("id"), new Ids(), new Ids()), Master.class))
                 .andRoute(POST("/api/master/{size}/{id}"), serverRequest -> ok().body(serverRequest.bodyToMono(Ids.class).flatMapMany(it -> masterService.findAll(Status.SUCCESS, parseInt(serverRequest.pathVariable("size")), serverRequest.pathVariable("id"), it, new Ids())), Master.class))
                 .andRoute(POST("/api/master/"), serverRequest -> ok().body(serverRequest.bodyToMono(Ids.class).flatMapMany(it -> masterService.findAll(Status.SUCCESS, 1000, null, new Ids(), it)), Master.class));
